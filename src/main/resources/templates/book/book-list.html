@@ -38,8 +38,8 @@
 			<!--表格上方的搜索操作-->
 			<div class="admin-search">
 				<div class="input-group">
-					<input type="text" class="text" placeholder="提示信息" />
-					<button class="button blue">搜索</button>
+					<input id="keyword" type="text" class="text" placeholder="提示信息" />
+					<button id="searchBtn" class="button blue">搜索</button>
 				</div>
 			</div>
 			
@@ -111,6 +111,57 @@
 
 
 <script>
+
+    $(document).ready(function(){
+        // 页面一加载, 展示数据列表, 每页10条
+        // $.post("/book/list",
+			// {"currPage":1,"keyword": "","pageSize": 10},function(result) {
+        //     var code =  result.code;
+        //     if (code != 200) {
+        //         javaex.optTip({
+        //             content : "服务器发生异常, 请与管理员联系!",
+        //             type : "error"
+        //         });
+        //     }else {
+        //         // 拿到数据
+        //         var json = JSON.stringify(result);
+        //         var data = json.data;
+        //         alert(data);
+        //         console.log(data);
+        //     }
+        //
+        // });
+
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/book/list",
+            //数据，json字符串
+            data : JSON.stringify({"currPage":1,"keyword": "","pageSize": 10}),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                var array = result.data;
+                $.each(array,function(index,value){
+                    alert(index+"..."+value);
+                });
+
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+
+    });
+
+
+
 	javaex.page({
 		id : "page",
 		pageCount : 12,	// 总页数
