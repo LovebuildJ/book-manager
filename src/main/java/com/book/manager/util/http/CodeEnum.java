@@ -12,6 +12,8 @@ public enum CodeEnum {
     NOT_FOUND(404,"找不到资源!"),
     /** 请求参数错误 */
     PARAM_ERROR(444,"请求参数错误!"),
+    /** 用户名或密码错误 */
+    NAME_OR_PASS_ERROR(445,"用户名或密码错误!"),
     /** 服务器发生异常 */
     FAIL(500,"服务器发生异常!");
 

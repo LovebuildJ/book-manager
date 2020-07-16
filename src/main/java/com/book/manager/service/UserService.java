@@ -39,6 +39,11 @@ public class UserService {
         return usersRepository.findByUsernameLike(keyword,pageable);
     }
 
+    public Users login(String username,String password) {
+       return usersRepository.findByUsernameAndPassword(username,password);
+    }
+
+
     /**
      * 添加用户
      * @param users 用户

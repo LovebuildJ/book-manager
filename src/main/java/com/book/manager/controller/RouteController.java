@@ -15,7 +15,7 @@ public class RouteController {
     /**
      * 跳转登录
      */
-    @RequestMapping({"/login","/"})
+    @RequestMapping({"/login","/","logout"})
     public String toLogin() {
         return "login";
     }
@@ -29,7 +29,7 @@ public class RouteController {
     }
 
     /**
-     * 跳转首页
+     * 跳转欢迎页面
      */
     @RequestMapping({"/welcome"})
     public String toWelcome() {
