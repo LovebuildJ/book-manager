@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<!--字体图标-->
+<link href="../javaex/pc/css/icomoon.css" rel="stylesheet" />
+<!--动画-->
+<link href="../javaex/pc/css/animate.css" rel="stylesheet" />
+<!--骨架样式-->
+<link href="../javaex/pc/css/common.css" rel="stylesheet" />
+<!--皮肤（缇娜）-->
+<link href="../javaex/pc/css/skin/tina.css" rel="stylesheet" />
+<!--jquery，不可修改版本-->
+<script src="../javaex/pc/lib/jquery-1.7.2.min.js"></script>
+<!--全局动态修改-->
+<script src="../javaex/pc/js/common.js"></script>
+<!--核心组件-->
+<script src="../javaex/pc/js/javaex.min.js"></script>
+<!--表单验证-->
+<script src="../javaex/pc/js/javaex-formVerify.js"></script>
+<title>后台管理</title>
+<style>
+    .ex-slide ul.focus-bg a{display: block; width: 100%; height: 100%; background: no-repeat 50%; background-size: cover;}
+    .ex-slide .wrapper{width: 1420px; height: 106px; margin: 0 auto; position: relative; margin-top: 414px;}
+    .ex-slide .focus-box{width: 100%; height: 106px;margin: 0 auto; position: absolute; left: 0; bottom: 0; filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#4C000000', endColorstr='#4C000000'); background: rgba(0,0,0,.3);}
+    .ex-slide .focus-box ul{padding-left: 20px;padding: 18px 0 0 18px; overflow: hidden;}
+    .ex-slide .focus-box li{float: left; width: 140px; height: 70px; margin-right: 15px; position: relative;}
+    .ex-slide .focus-box li img{display: block; width: 140px; height: 70px; position: relative;}
+    .ex-slide .focus-box li.on img{border: 3px solid #24baf1;}
+    
+    .ex-slide{width: 100%; height: 720px;}
+    .ex-slide ul.focus-bg li{width: 100%; height: 720px;}
+</style>  
+</head>
+<body>
+    <!--  头部导航  -->
+	<div class="breadcrumb">
+        <!-- <span>总览</span> -->
+        <span class="divider">/</span>
+        <span class="active">精彩活动</span>
+    </div>
+    <!--幻灯片-->
+    <div style="width: 100%; height: 520px;">
+        <!--幻灯片-->
+        <div id="slide" class="ex-slide">
+            <!--背景大图-->
+            <ul class="focus-bg">
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i3.kanimg.kankan.com/gallery2/block/2019/01/15/83cb3f761a780470d43f44478c9e7fd1.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i7.kanimg.kankan.com/gallery2/block/2019/01/14/362d14b1f091533897a7983dde9cef3f.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i9.kanimg.kankan.com/gallery2/block/2019/01/14/395d960fcb3a780870026e1bcab98d32.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i0.kanimg.kankan.com/gallery2/block/2019/01/07/79e062d0b53543040a36408d5d7a0787.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i3.kanimg.kankan.com/gallery2/block/2019/01/14/1fed0b0d452517aa1016c0f6ddab5fbb.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i6.kanimg.kankan.com/gallery2/block/2019/01/18/3b221782c1a1b00079fa16a5be3c05df.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i9.kanimg.kankan.com/gallery2/block/2019/01/08/c846f60a37561b954730c1fafd27b0e7.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i4.kanimg.kankan.com/gallery2/block/2019/01/15/5c66964e08e146b3512a0a521633bbfa.jpg')">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank" style="background-image: url('http://i2.kanimg.kankan.com/gallery2/block/2019/01/08/eb5e42b6b67648daabc0132f73aacb44.jpg')">
+                    </a>
+                </li>
+            </ul>
+    
+            <div class="wrapper">
+                <!--焦点，如果不需要焦点的话，直接去掉这个div即可-->
+                <div class="focus-box">
+                    <ul>
+                        <li>
+                            <a href="javascript:;"><img src="http://i2.kanimg.kankan.com/gallery2/block/2019/01/15/1cdebac945da60725f6529a225db2e5a.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i2.kanimg.kankan.com/gallery2/block/2019/01/14/7d13f84f2dc5dc4253fc11fc86dc17da.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i2.kanimg.kankan.com/gallery2/block/2018/06/25/b46c8190b50de629f7973dbe13b9f121.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i9.kanimg.kankan.com/gallery2/block/2019/01/07/0097872f5c43959e2f4b6f17508e7061.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i4.kanimg.kankan.com/gallery2/block/2019/01/14/a5568fdb57ca748cdd3ed30a5a8fb976.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i4.kanimg.kankan.com/gallery2/block/2018/12/20/cdf72b713787b3db302e896e98813f0a.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i0.kanimg.kankan.com/gallery2/block/2019/01/08/634cfb1fad6d0003de1cdd936e194588.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i7.kanimg.kankan.com/gallery2/block/2019/01/15/ddfdf3cd844935cb390047b466c7c789.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="http://i9.kanimg.kankan.com/gallery2/block/2019/01/08/a395face6aafc2f00a1121dfc316c681.jpg" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        javaex.slide({
+            id : "slide",
+            delay : 3000
+        });
+    </script>
+</body>
+</html>
