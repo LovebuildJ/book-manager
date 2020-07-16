@@ -1,0 +1,262 @@
+@charset "utf-8";
+/*皮肤：缇娜*/
+/*弹出层*/
+.dialog {
+	background-color: #fff;
+}
+.dialog .dialog-content {
+	color: #333;
+}
+.dialog .dialog-button-container {
+	border-top: 1px solid #ebedf0;
+}
+.dialog .dialog-button {
+	background: #F3F3F3;
+}
+.dialog .confirm {
+	color: #444;
+}
+.tip-content {
+	background-color: rgba(0,0,0,.8);
+	border-radius: 8px; color: #fff;
+}
+.popup {
+	color: #333;
+}
+.popup .dialog-title {
+	color: #333;
+	background: #F3F3F3;
+	font-size: 0.44rem;
+}
+.popup .operation {
+	background: #fff;
+}
+.popup .button-cancel {
+	color: #666;
+	background: #fff;
+	border-top:1px solid #eee;
+}
+.loading {
+	background: rgba(40,40,40,0.7);
+	border-radius: 5px;
+	color: #FFFFFF;
+}
+.vertical li {
+	border-bottom: 1px solid #e5e5e5;
+}
+.vertical li:last-child {
+	border-bottom: none;
+}
+
+/*主体内容结构*/
+.block {
+	background-color: #fff;
+}
+.block .divider {
+	border-top: 1px solid #eee;
+}
+.banner {
+	border-bottom: 1px solid #eee;
+}
+.banner .subtitle {
+	color: #888;
+}
+.subtitle a {
+	color: #999;
+}
+
+/*表单*/
+.subtitle {
+	color: #888;
+}
+.unit .right input {
+	color: #666;
+	text-align: right;
+}
+textarea.desc {
+	color: #666;
+}
+
+/*单选框和复选框*/
+/*普通填充样式*/
+input[type="radio"].fill ~ .fill-css {
+	border: 1px solid #c0c0c0;
+	background-color: #c0c0c0;
+}
+input[type="checkbox"].fill ~ .fill-css {
+	border: 1px solid #c0c0c0;
+}
+input[type="radio"].fill:disabled ~ .fill-css {
+	border: 1px solid #ddd;
+	background-color: #ddd;
+}
+input[type="checkbox"].fill:disabled ~ .fill-css {
+	border: 1px solid #ccc;
+}
+input[type="radio"].fill:checked ~ .fill-css, input[type="checkbox"].fill:checked ~ .fill-css {
+	border: 1px solid #2196f3;
+	background-color: #2196f3;
+}
+
+input[type="radio"].fill:checked[disabled] ~ .fill-css, input[type="checkbox"].fill:checked[disabled] ~ .fill-css {
+	border: 1px solid #c9e2f9;
+	background-color: #c9e2f9;
+}
+/*开关样式复选框*/
+.switch {
+	background-color: #999;
+}
+.switch:checked {
+	border-color: #3a9bd9;
+	background-color: #3a9bd9;
+	box-shadow: #3a9bd9 0 0 0 16px inset;
+}
+
+/*底部固定*/
+.footer-ul {
+	background-color: #fff;
+}
+.footer-ul .active {
+	color: #12b7f5;
+}
+.footer-ul ul {
+	color: #666;
+}
+.footer-div {
+	background-color: #fff;
+}
+.footer-div ul {
+	color: #666;
+}
+.footer-div > div > div {
+	border-right: 1px solid #ebebeb;
+}
+
+/*底部弹出菜单*/
+.javaex-menu .sub-menu {
+	box-shadow: 0 6px 24px rgba(0, 0, 0, .24);
+}
+.javaex-menu .sub-menu li {
+	background:#fff;
+	border-top:1px solid #f2f2f2;
+}
+.javaex-menu .sub-menu li a {
+	background:#fff;
+}
+.javaex-menu .menu-flag {
+	border: 5px solid transparent;
+	border-right: 5px solid #333; 
+	border-bottom: 5px solid #333;
+	opacity: .5;
+}
+
+/*顶部*/
+.header {
+	background: #12b7f5 !important;
+	color: #FFF;
+}
+.header > .left {
+	left: 0px;
+	color: #fff;
+	width: 1.2rem;
+}
+.header > .right {
+	right: 0px;
+	color: #fff;
+	width: 1.2rem;
+}
+
+
+/*侧栏*/
+#slide-nav {
+	background: #fff;
+}
+
+/*下拉导航菜单*/
+#guide-nav ul {
+	background: #fff;
+	border-image: url(../../images/border.png) 2 2 repeat;
+	-webkit-border-image: url(../../images/border.png) 2 2 repeat;
+}
+#guide-nav ul li.active {
+	background-color: #ff851b;
+}
+#guide-nav ul li.active a {
+	color: #fff;
+}
+#guide-nav ul.active .more span {
+	color: #ff851b;
+}
+
+/*滚动公告*/
+.big-title {
+	background: #fa4e46;
+	color: #fff;
+}
+
+/*屏幕预加载*/
+.loading-screen {
+	background: url(../../images/loading_screen.gif) no-repeat center;
+	background-size: 80%;
+}
+
+/*上滑加载（分页）*/
+.infinite-scroll-preloader .load-data {
+	background: url(../../images/loading.gif);
+	width: 2.5rem;
+	height: .8rem;
+	background-size: 2.5rem auto;
+}
+.infinite-scroll-preloader .no-data {
+	color: #666;
+	background-color: #fff;
+	border-top: 1px solid #eee;
+}
+
+/*tab选项卡切换*/
+.tab-title {
+	background: #fff;
+}
+.tab-title li {
+	color: #666666;
+}
+.tab-title li.current {
+	color: #2fb3ff;
+}
+.tab-title .border {
+	bottom: -1px;
+	left: 0;
+	height: 4px;
+	background: #2fb3ff;
+}
+.tab-container{
+	background: #fff;
+	min-height: 500px;
+}
+.tab-bar li.current {
+	color: #2fb3ff;
+	border-left-color: #2fb3ff;
+	background: #fff;
+}
+
+/*超出屏幕的tab滑动*/
+.tabbar {
+	background-color: white;
+	border-bottom: 1px solid #f3f3f3;
+}
+.tabbar>a.activate::after {
+	background-color: #61A8FF;
+}
+
+/*下拉选择框*/
+.search-input {
+	background-color: #f7f7f8;
+}
+.search-input input {
+	color: #3d4145;
+	background-color: #fff;
+	border: 1px solid #b4b4b4;
+}
+.search-input .icon {
+	color: #b4b4b4;
+}
