@@ -52,53 +52,27 @@
 			</div> -->
 			<table id="table" class="table color2">
 				<thead>
-					<tr>
-						<th class="checkbox"><input type="checkbox" class="fill listen-1" /> </th>
+					<tr align="center">
 						<th>序号</th>
-						<th>市区</th>
-						<th>省区</th>
-						<th>国别</th>
-						<th>国别</th>
+						<th>书名</th>
+						<th>作者</th>
+						<th>ISBN</th>
+						<th>页数</th>
+						<th>定价</th>
+						<th>出版社</th>
+						<th>出版时间</th>
+						<th>库存数量</th>
+						<th>翻译</th>
+						<th>分类</th>
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>1</td>
-						<td>苏州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>2</td>
-						<td>无锡</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>3</td>
-						<td>常州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
+				<tbody id="tbody">
+					<!--<tr>-->
+						<!--<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>-->
+						<!--<td>1</td>-->
+						<!--<td><button class="button blue">编辑</button><button class="button red">删除</button></td>-->
+					<!--</tr>-->
 				</tbody>
             </table>
             
@@ -111,27 +85,34 @@
 
 
 <script>
+    // 定义全局 分页属性
+    var currPage = 1;
+    var pageSize = 10;
+    var total = 0;
 
+    // 页面一加载, 展示数据列表, 每页10条
     $(document).ready(function(){
-        // 页面一加载, 展示数据列表, 每页10条
-        // $.post("/book/list",
-			// {"currPage":1,"keyword": "","pageSize": 10},function(result) {
-        //     var code =  result.code;
-        //     if (code != 200) {
-        //         javaex.optTip({
-        //             content : "服务器发生异常, 请与管理员联系!",
-        //             type : "error"
-        //         });
-        //     }else {
-        //         // 拿到数据
-        //         var json = JSON.stringify(result);
-        //         var data = json.data;
-        //         alert(data);
-        //         console.log(data);
-        //     }
-        //
-        // });
 
+		rander(currPage,pageSize);
+        // 清空分页组件
+        $("#page").empty();
+        // 调用分页组件
+        javaex.page({
+            id : "page",
+            pageCount : 12,	// 总页数
+            currentPage : currPage,// 默认选中第几页
+            perPageCount : pageSize,	// 每页显示多少条，不填时，不显示该条数选择控件
+            isShowJumpPage : false,	// 是否显示跳页
+            totalNum : total,		// 总条数，不填时，不显示
+            position : "center",
+            callback : function(rtn) {
+                // 翻页
+                rander(rtn.pageNum,rtn.perPageCount);
+            }
+        });
+    });
+
+	function rander(currPage,pageSize) {
         $.ajax({
             //请求方式
             type : "POST",
@@ -140,16 +121,33 @@
             //请求地址
             url : "/book/list",
             //数据，json字符串
-            data : JSON.stringify({"currPage":1,"keyword": "","pageSize": 10}),
+            data : JSON.stringify({"currPage":currPage,"keyword": "","pageSize": pageSize}),
             //请求成功
             success : function(result) {
                 console.log(result);
-                var array = result.data;
+                // 获取集合属性
+                var r = result.data;
+                // 分页信息
+                currPage = r.currPage;
+                pageSize = r.pageSize;
+                total = r.total;
+
+                console.log("currPage:"+currPage+"pageSize:"+pageSize+"total:"+total);
+
+                var array = r.list;
+                var text = "";
                 $.each(array,function(index,value){
-                    alert(index+"..."+value);
+                    console.log(value);
+                   var num = pageSize * (currPage - 1) + index + 1;
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.isbn+"</td><td>"+value.author+"</td>" +
+                        "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.publishTime+"</td>" +
+                        "<td>"+value.size+"</td><td>"+value.translate+"</td><td>"+value.type+"</td><td>"+
+                        "<button class='button blue'>编辑</button><button class='button red'>删除</button></td></tr>";
+
+
                 });
 
-
+                $("#tbody").html(text);
             },
             //请求失败，包含具体的错误信息
             error : function(e){
@@ -158,23 +156,8 @@
             }
         });
 
-    });
+    }
 
-
-
-	javaex.page({
-		id : "page",
-		pageCount : 12,	// 总页数
-		currentPage : 1,// 默认选中第几页
-		// perPageCount : 10,	// 每页显示多少条，不填时，不显示该条数选择控件
-		isShowJumpPage : false,	// 是否显示跳页
-		totalNum : 125,		// 总条数，不填时，不显示
-		position : "center",
-		callback : function(rtn) {
-			console.log("当前选中的页数：" + rtn.pageNum);
-			console.log("每页显示条数：" + rtn.perPageCount);
-		}
-	});
 </script>
 </body>
 </html>
