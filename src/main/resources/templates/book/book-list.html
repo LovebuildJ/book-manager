@@ -39,17 +39,19 @@
 			<div class="admin-search">
 				<div class="input-group">
 					<input id="keyword" type="text" class="text" placeholder="提示信息" />
-					<button id="searchBtn" class="button blue">搜索</button>
+					<button id="searchBtn" class="button blue" onclick="search();">搜索</button>
 				</div>
 			</div>
 			
 			<!--表格上方的操作元素，添加、删除等-->
-			<!-- <div class="operation-wrap">
+			<!--
+			<div class="operation-wrap">
 				<div class="buttons-wrap">
 					<button class="button blue radius-3"><span class="icon-plus"></span> 添加</button>
 					<button class="button red radius-3"><span class="icon-close2"></span> 删除</button>
 				</div>
-			</div> -->
+			</div>
+			-->
 			<table id="table" class="table color2">
 				<thead>
 					<tr align="center">
@@ -84,35 +86,18 @@
 </div>
 
 
-<script>
-    // 定义全局 分页属性
-    var currPage = 1;
-    var pageSize = 10;
-    var total = 0;
+<script type="text/javascript">
 
     // 页面一加载, 展示数据列表, 每页10条
     $(document).ready(function(){
-
-		rander(currPage,pageSize);
-        // 清空分页组件
-        $("#page").empty();
-        // 调用分页组件
-        javaex.page({
-            id : "page",
-            pageCount : 12,	// 总页数
-            currentPage : currPage,// 默认选中第几页
-            perPageCount : pageSize,	// 每页显示多少条，不填时，不显示该条数选择控件
-            isShowJumpPage : false,	// 是否显示跳页
-            totalNum : total,		// 总条数，不填时，不显示
-            position : "center",
-            callback : function(rtn) {
-                // 翻页
-                rander(rtn.pageNum,rtn.perPageCount);
-            }
-        });
+        // 默认查询所有
+		rander(1,"",10);
     });
 
-	function rander(currPage,pageSize) {
+    // 渲染数据表格
+	function rander(currPage,keyword,pageSize) {
+        // 定义全局 分页属性
+        var total = 0;
         $.ajax({
             //请求方式
             type : "POST",
@@ -121,7 +106,7 @@
             //请求地址
             url : "/book/list",
             //数据，json字符串
-            data : JSON.stringify({"currPage":currPage,"keyword": "","pageSize": pageSize}),
+            data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
             //请求成功
             success : function(result) {
                 console.log(result);
@@ -139,15 +124,32 @@
                 $.each(array,function(index,value){
                     console.log(value);
                    var num = pageSize * (currPage - 1) + index + 1;
-                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.isbn+"</td><td>"+value.author+"</td>" +
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
                         "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.publishTime+"</td>" +
                         "<td>"+value.size+"</td><td>"+value.translate+"</td><td>"+value.type+"</td><td>"+
-                        "<button class='button blue'>编辑</button><button class='button red'>删除</button></td></tr>";
-
-
+                        "<button class='button blue empty' onclick='updateBook("+value.id+")'>编辑</button> &nbsp;<button class='button yellow empty' onclick='delBook("+value.id+")'>删除</button></td></tr>";
                 });
 
                 $("#tbody").html(text);
+
+                // 向上取整去总页数
+                var totalPage = Math.ceil(total/pageSize);
+                // 清空分页组件
+                $("#page").empty();
+                // 调用分页组件
+                javaex.page({
+                    id : "page",
+                    pageCount : totalPage,	// 总页数
+                    currentPage : currPage,// 默认选中第几页
+                    perPageCount : pageSize,	// 每页显示多少条，不填时，不显示该条数选择控件
+                    isShowJumpPage : false,	// 是否显示跳页
+                    totalNum : total,		// 总条数，不填时，不显示
+                    position : "center",
+                    callback : function(rtn) {
+                        // 翻页
+                        rander(rtn.pageNum,keyword,rtn.perPageCount);
+                    }
+                });
             },
             //请求失败，包含具体的错误信息
             error : function(e){
@@ -155,9 +157,49 @@
                 console.log(e.responseText);
             }
         });
-
     }
 
+    // 搜索
+    function search() {
+        // 获取搜索关键字
+        var keyword = $("#keyword").val();
+        // 搜索结果渲染表格
+        rander(1,keyword,10);
+    }
+
+    // 编辑
+    function updateBook(id) {
+	    console.log("update Book"+id);
+		window.location.href="/book/book-update?id="+id;
+    }
+
+    // 删除
+    function delBook(id) {
+        console.log("delete Book"+id);
+        javaex.confirm({
+            content : "确定要删除么",
+            callback : "delCallback("+id+")"
+        });
+    }
+
+    function delCallback(id) {
+		// ajax
+        $.get("/book/delete",{"id": id},
+            function(data){
+                var code = data.code;
+                if (code == 200) {
+                    javaex.message({
+                        content : "删除成功",
+                        type : "success"
+                    });
+
+                    // 删除成功, 刷新页面
+                    window.location.reload();
+				}
+            });
+        // 如果你想阻止弹出层关闭，直接 return false; 即可
+        //return false;
+    }
 </script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import com.book.manager.service.BookService;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
 import com.book.manager.util.http.CodeEnum;
+import com.book.manager.util.po.BookOut;
 import com.book.manager.util.po.PageOut;
 import com.book.manager.util.vo.PageIn;
 import com.github.pagehelper.PageInfo;
@@ -36,12 +37,12 @@ public class BookController {
             return R.fail(CodeEnum.PARAM_ERROR);
         }
         // 封装分页出参对象
-        PageInfo<Users> userList = bookService.getBookList(pageIn);
+        PageInfo<BookOut> outs = bookService.getBookList(pageIn);
         PageOut pageOut = new PageOut();
-        pageOut.setCurrPage(userList.getPageNum());
-        pageOut.setPageSize(userList.getPageSize());
-        pageOut.setTotal((int) userList.getTotal());
-        pageOut.setList(userList.getList());
+        pageOut.setCurrPage(outs.getPageNum());
+        pageOut.setPageSize(outs.getPageSize());
+        pageOut.setTotal((int) outs.getTotal());
+        pageOut.setList(outs.getList());
 
         return R.success(CodeEnum.SUCCESS,pageOut);
     }

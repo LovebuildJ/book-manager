@@ -11,11 +11,11 @@
         <result column="publish" property="publish" jdbcType="VARCHAR" />
         <result column="price" property="price" jdbcType="INTEGER" />
         <result column="size" property="size" jdbcType="INTEGER" />
-        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
         <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <!-- 模糊查询 -->
+    <!-- 模糊查询 倒序 -->
     <select id="findBookListByLike" resultMap="BaseResultMap" >
         select * from book
         <where>
@@ -23,6 +23,7 @@
                and `name` like CONCAT('%',#{_parameter},'%') or `isbn` like CONCAT('%',#{_parameter},'%')
             </if>
         </where>
+        order by id desc
     </select>
 
 
@@ -50,7 +51,7 @@
             <if test="size != null">
                 `size` = #{size},
             </if>
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 `type` = #{type},
             </if>
             <if test="publishTime != null">

@@ -3,6 +3,7 @@ package com.book.manager.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,7 +40,9 @@ public class Book {
 
     private Integer size;
 
-    private Integer type;
+    private String type;
 
     private Date publishTime;
+
+    // json字符串： {"isbn":"isbn","name":"name","author":"author","pages":"pages","translate":"translate","publish":"publish","price":"price","size":"size","type":"type","publishTime":"publishTime"}
 }

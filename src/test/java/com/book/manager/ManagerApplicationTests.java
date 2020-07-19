@@ -33,7 +33,7 @@ public class ManagerApplicationTests {
 			book.setPublish("北京邮电出版社分社"+i);
 			book.setSize(i);
 			book.setTranslate("翻译者"+i);
-			book.setType(0);
+//			book.setType(0);
 			book.setPublishTime(new Date());
 			bookService.addBook(book);
 
