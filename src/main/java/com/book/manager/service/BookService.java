@@ -10,6 +10,7 @@ import com.book.manager.entity.Users;
 import com.book.manager.repos.BookRepository;
 import com.book.manager.repos.UsersRepository;
 import com.book.manager.util.po.BookOut;
+import com.book.manager.util.po.PageOut;
 import com.book.manager.util.vo.PageIn;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -87,19 +88,27 @@ public class BookService {
      * @param pageIn
      * @return
      */
-    public PageInfo<BookOut> getBookList(PageIn pageIn) {
+    public PageOut getBookList(PageIn pageIn) {
 
         PageHelper.startPage(pageIn.getCurrPage(),pageIn.getPageSize());
         List<Book> list = bookMapper.findBookListByLike(pageIn.getKeyword());
+        PageInfo<Book> pageInfo = new PageInfo<>(list);
+
         List<BookOut> bookOuts = new ArrayList<>();
-        for (Book book : list) {
+        for (Book book : pageInfo.getList()) {
             BookOut out = new BookOut();
             BeanUtil.copyProperties(book,out);
             out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
             bookOuts.add(out);
         }
 
-        return new PageInfo<>(bookOuts);
+        // 自定义分页返回对象
+        PageOut pageOut = new PageOut();
+        pageOut.setList(bookOuts);
+        pageOut.setTotal((int)pageInfo.getTotal());
+        pageOut.setCurrPage(pageInfo.getPageNum());
+        pageOut.setPageSize(pageInfo.getPageSize());
+        return pageOut;
     }
 
 

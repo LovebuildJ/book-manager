@@ -97,7 +97,6 @@
     // 渲染数据表格
 	function rander(currPage,keyword,pageSize) {
         // 定义全局 分页属性
-        var total = 0;
         $.ajax({
             //请求方式
             type : "POST",
@@ -112,12 +111,11 @@
                 console.log(result);
                 // 获取集合属性
                 var r = result.data;
+                var total = r.total;
+                var currPage = r.currPage;
+                var pageSize = r.pageSize;
                 // 分页信息
-                currPage = r.currPage;
-                pageSize = r.pageSize;
-                total = r.total;
-
-                console.log("currPage:"+currPage+"pageSize:"+pageSize+"total:"+total);
+                console.log("currPage:"+r.currPage+"\t pageSize:"+r.pageSize+"\t total:"+r.total);
 
                 var array = r.list;
                 var text = "";
@@ -134,6 +132,7 @@
 
                 // 向上取整去总页数
                 var totalPage = Math.ceil(total/pageSize);
+                console.log("totalPage:"+totalPage);
                 // 清空分页组件
                 $("#page").empty();
                 // 调用分页组件
@@ -141,7 +140,7 @@
                     id : "page",
                     pageCount : totalPage,	// 总页数
                     currentPage : currPage,// 默认选中第几页
-                    perPageCount : pageSize,	// 每页显示多少条，不填时，不显示该条数选择控件
+                    perPageCount : pageSize ,	// 每页显示多少条，不填时，不显示该条数选择控件
                     isShowJumpPage : false,	// 是否显示跳页
                     totalNum : total,		// 总条数，不填时，不显示
                     position : "center",

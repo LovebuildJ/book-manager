@@ -36,15 +36,8 @@ public class BookController {
         if (pageIn == null) {
             return R.fail(CodeEnum.PARAM_ERROR);
         }
-        // 封装分页出参对象
-        PageInfo<BookOut> outs = bookService.getBookList(pageIn);
-        PageOut pageOut = new PageOut();
-        pageOut.setCurrPage(outs.getPageNum());
-        pageOut.setPageSize(outs.getPageSize());
-        pageOut.setTotal((int) outs.getTotal());
-        pageOut.setList(outs.getList());
 
-        return R.success(CodeEnum.SUCCESS,pageOut);
+        return R.success(CodeEnum.SUCCESS,bookService.getBookList(pageIn));
     }
 
     @ApiOperation("添加图书")
