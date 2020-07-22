@@ -10,8 +10,10 @@
 - 基础框架： SpringBoot
 - 简单数据操作： Spring Data Jpa
 - 复杂数据操作： Mybatis
+- 安全框架： SpringSecurity
 - 模板引擎： Thymeleaf
 - API文档&测试： Swagger2
+
 
 前端：
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
