@@ -19,11 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 添加拦截器
-        registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/login.html");
+        // 添加拦截器 使用spring security 无需登录拦截
     }
+
+
 }

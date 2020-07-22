@@ -36,9 +36,9 @@
 		<!--正文内容-->
 		<div class="main">
 			<!--表格上方的搜索操作-->
-			<div class="admin-search" align="center">
+			<div class="main">
 				<div class="input-group">
-					<input id="keyword" type="text" class="text" placeholder="提示信息" />
+					<input id="keyword" type="text" class="text" style="width: 400px" placeholder="搜索想要借阅的图书" />
 					<button id="searchBtn" class="button blue" onclick="search();">搜索</button>
 				</div>
 			</div>
@@ -127,7 +127,7 @@
                     text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
                         "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.publishTime+"</td>" +
                         "<td>"+value.size+"</td><td>"+value.translate+"</td><td>"+value.type+"</td><td>"+
-                        "<button class='button blue empty' onclick='updateBook("+value.id+")'>编辑</button> &nbsp;<button class='button yellow empty' onclick='delBook("+value.id+")'>删除</button></td></tr>";
+                        "<button class='button blue empty' onclick='borrowBook("+value.id+")'>借阅</button></td></tr>";
                 });
 
                 $("#tbody").html(text);
@@ -167,39 +167,18 @@
         rander(1,keyword,10);
     }
 
-    // 编辑
-    function updateBook(id) {
+    // 借阅图书
+    function borrowBook(id) {
         console.log("update Book"+id);
-        window.location.href="/book/book-update?id="+id;
+
+        // 借阅, 用户可借数量减一, 图书数量减一 , 注意界限判断
+
+
+
+        // 借阅完成, 重新加载
+        window.location.reload();
     }
 
-    // 删除
-    function delBook(id) {
-        console.log("delete Book"+id);
-        javaex.confirm({
-            content : "确定要删除么",
-            callback : "delCallback("+id+")"
-        });
-    }
-
-    function delCallback(id) {
-        // ajax
-        $.get("/book/delete",{"id": id},
-            function(data){
-                var code = data.code;
-                if (code == 200) {
-                    javaex.message({
-                        content : "删除成功",
-                        type : "success"
-                    });
-
-                    // 删除成功, 刷新页面
-                    window.location.reload();
-                }
-            });
-        // 如果你想阻止弹出层关闭，直接 return false; 即可
-        //return false;
-    }
 </script>
 </body>
 </html>

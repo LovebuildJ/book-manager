@@ -1,19 +1,25 @@
 package com.book.manager.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.book.manager.dao.UsersMapper;
 import com.book.manager.entity.Users;
 import com.book.manager.repos.UsersRepository;
 import com.book.manager.util.vo.PageIn;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +29,16 @@ import java.util.Optional;
  * @Author by 尘心
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
     @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 获取所有用户, 分页
@@ -97,5 +106,23 @@ public class UserService {
         return new PageInfo<>(listByLike);
     }
 
-
+    /**
+     * 用户鉴权
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 查找用户
+        Users user = usersRepository.findByUsername(username);
+        // 获得角色
+        String role = String.valueOf(user.getIsAdmin());
+        // 角色集合
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        // 角色必须以`ROLE_`开头，数据库中没有，则在这里加
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        // 数据库密码是明文, 需要加密进行比对
+        return new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), authorities);
+    }
 }

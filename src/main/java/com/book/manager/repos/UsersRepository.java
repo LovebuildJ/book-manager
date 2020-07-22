@@ -33,4 +33,11 @@ public interface UsersRepository extends JpaRepository<Users,Integer>{
      * @param password 密码
      */
     Users findByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+
+    /**
+     * 用户名查询
+     * @param username
+     * @return
+     */
+    Users findByUsername(@Param("username") String username);
 }

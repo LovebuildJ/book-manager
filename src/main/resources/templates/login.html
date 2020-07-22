@@ -51,6 +51,9 @@
                     <span class="form-txt">密码：</span>
                     <input type="password" class="form-input original" name="password" id="pass" placeholder="请输入密码" data-type="必填" error-pos="32" />
                 </div>
+                <div class="form-item">
+                    <input type="checkbox" id="remember" name="remember" class="fill"/> 记住我
+                </div>
                 <div class="form-btn">
                     <input type="button" class="ui-button" id="save" value="登录" />
                 </div>
@@ -62,17 +65,20 @@
     $("#save").on("click", function(){
         var username =  $("#uname").val();
         var password =  $("#pass").val();
+        // 记住我
+        var remember = $("#remember").val();
 
-        $.post("/user/login",{"username":username,"password": password},function(result) {
-            var code =  result.code;
-            // alert(code);
-            // alert(JSON.stringify(result));
-            if (code != 200) {
+        $.post("/user/login",{"username":username,"password": password,"remember":remember},function(result) {
+            // 由于SpringSecurity 框架返回的是HTML页面, 所以使用js形式登录只能以html页面元素判定是否登录成功
+            var index = result.indexOf("remember");
+            if (index>0) {
+                // 提示登录失败
                 javaex.optTip({
                     content : "用户名或密码错误!",
                     type : "error"
                 });
             }else {
+                // 登录成功 跳转首页
                 window.location.href="/index";
             }
 
