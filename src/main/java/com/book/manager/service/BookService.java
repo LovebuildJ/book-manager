@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class BookService {
      * @param book 图书对象
      * @return true or false
      */
+    @Transactional
     public boolean updateBook(Book book) {
         return bookMapper.updateBook(BeanUtil.beanToMap(book))>0;
     }
@@ -63,6 +65,14 @@ public class BookService {
             BeanUtil.copyProperties(book,out);
             out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
             return out;
+        }
+        return null;
+    }
+
+    public Book findBook(Integer id) {
+        Optional<Book> optional = bookRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
         }
         return null;
     }

@@ -1,5 +1,7 @@
 package com.book.manager.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
@@ -10,8 +12,10 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @Description 用户管理
@@ -19,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @Author by 尘心
  */
 @Api(tags = "用户管理")
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UsersController {
 
@@ -27,7 +31,6 @@ public class UsersController {
     private UserService userService;
 
     @ApiOperation("用户列表")
-    @ResponseBody
     @PostMapping("/list")
     public R getUsers(@RequestBody PageIn pageIn) {
         if (pageIn == null) {
@@ -45,14 +48,12 @@ public class UsersController {
     }
 
     @ApiOperation("添加用户")
-    @ResponseBody
     @PostMapping("/add")
     public R getUsers(@RequestBody Users users) {
         return R.success(CodeEnum.SUCCESS,userService.addUser(users));
     }
 
     @ApiOperation("编辑用户")
-    @ResponseBody
     @PostMapping("/update")
     public R modifyUsers(@RequestBody Users users) {
         return R.success(CodeEnum.SUCCESS,userService.updateUser(users));
@@ -60,18 +61,30 @@ public class UsersController {
 
 
     @ApiOperation("用户详情")
-    @ResponseBody
     @GetMapping("/detail")
     public R userDetail(Integer id) {
         return R.success(CodeEnum.SUCCESS,userService.findUserById(id));
     }
 
     @ApiOperation("删除用户")
-    @ResponseBody
     @GetMapping("/delete")
     public R delUsers(Integer id) {
         userService.deleteUser(id);
         return R.success(CodeEnum.SUCCESS);
     }
 
+    @ApiOperation("获取当前用户登陆信息")
+    @GetMapping("/currUser")
+    public R getCurrUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal!=null) {
+            Map<String,Object> map = BeanUtil.beanToMap(principal);
+            String username = (String) map.get("username");
+            if (StrUtil.isNotBlank(username)) {
+                Users users = userService.findByUsername(username);
+                return R.success(CodeEnum.SUCCESS,users);
+            }
+        }
+        return R.fail(CodeEnum.USER_NOT_FOUND);
+    }
 }

@@ -43,4 +43,8 @@ public class Borrow {
 
     @ApiModelProperty("实际归还时间")
     private Date updateTime;
+
+    @ApiModelProperty("是否归还? 0 已归还/1 未归还")
+    private Integer ret;
+    // json: {"userId":userId,"bookId":bookId,"createTime":createTime,"endTime":endTime,"updateTime":updateTime}
 }

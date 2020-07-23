@@ -8,6 +8,7 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ret" property="ret" jdbcType="INTEGER" />
     </resultMap>
 
 </mapper>

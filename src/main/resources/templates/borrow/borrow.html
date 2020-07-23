@@ -117,14 +117,12 @@
 
 <script>
 
-
-
-
+	var bookId = 0;
     // 页面一加载赋值表单
     $(document).ready(function(){
         // 地址栏参数
-        var id = getQueryVariable("id");
-        if (id == null||id == "") {
+        bookId = getQueryVariable("id");
+        if (bookId == null||bookId == "") {
             $("#isbn").removeAttr("readonly");
             // 监听输入框
             $("#isbn").bind("input propertychange",function(event){
@@ -142,12 +140,15 @@
                     $("#publish").val(data.publish);
                     $("#type").val(data.type);
                     $("#size").val(data.size);
+
+                    bookId = data.id;
+
                     console.log(data.type);
                 });
             });
         }else {
             // get读取参数
-            $.get("/book/detail",{"id": id}, function(data){
+            $.get("/book/detail",{"id": bookId}, function(data){
                 var data = data.data;
                 console.log(data);
                 // 页面一加载, 读取登录用户信息
@@ -191,6 +192,9 @@
     day.setDate(day.getDate() + 1);
     var endDate = dateFormat("YYYY-mm-dd",day);
 
+    var sTime = startDate;
+    var eTime = endDate;
+
     javaex.date({
         id : "date2",		// 承载日期组件的id
         monthNum : 2,		// 2代表选择范围日期
@@ -198,7 +202,10 @@
         endDate : endDate,		// 结束日期
         // 重新选择日期之后返回一个时间对象
         callback : function(rtn) {
-            alert(rtn.startDate + " - " + rtn.endDate);
+            console.log(rtn.startDate + " - " + rtn.endDate);
+            // 刷新时间
+            sTime = rtn.startDate;
+            eTime = rtn.endDate;
         }
     });
 
@@ -213,6 +220,7 @@
                 content : "请输入正确的图书编码!",
                 type : "error"
             });
+            return false;
 		}
 
 		if (size==null||size<=0) {
@@ -220,10 +228,69 @@
                 content : "库存数量不够, 无法借阅!",
                 type : "error"
             });
+            return false;
 		}
 
+		var userId = 0;
+		// 先获取当前登录用户信息
+        $.get("/user/currUser", function(data){
+			var user = data.data;
+			userId = user.id;
+			console.log(userId);
+            // 查找到用户, 进行借阅
+            if (userId >0) {
+                var json = {"userId":userId,"bookId":bookId,"createTime":sTime,"endTime":eTime,"updateTime":eTime};
+                // 借阅图书
+                $.ajax({
+                    //请求方式
+                    type : "POST",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    //请求地址
+                    url : "/borrow/add",
+                    //数据，json字符串
+                    data : JSON.stringify(json),
+                    //请求成功
+                    success : function(result) {
+                        console.log(result);
+                        // 获取集合属性
+                        var data = result.data;
+                        var code = result.code;
+                        var msg = result.msg;
+
+                        if (code == 200) {
+                            javaex.message({
+                                content : "借阅成功",
+                                type : "success"
+                            });
+                            // 跳转至列表
+                            setTimeout(function(){window.location.href="/borrow/book-search";},1800)
+                        }else{
+                            javaex.message({
+                                content : msg,
+                                type : "error"
+                            });
+                            setTimeout(function(){},1000)
+						}
+
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+            }else {
+                // 找不到用户, 不可进行借阅操作
+                javaex.message({
+                    content : "登录信息已失效, 请登录后借阅",
+                    type : "error"
+                });
+            }
+        });
 
     });
+
 
     // 监听点击返回按钮事件
     $("#return").click(function() {

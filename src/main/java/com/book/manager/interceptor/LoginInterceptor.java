@@ -21,13 +21,6 @@ public class LoginInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         // 查看用户session 是否已登录
-        Object username = session.getAttribute("username");
-        // 暂时去掉拦截
-//        if (username == null) {
-//            // 未登录 直接跳转到登录页
-//            response.sendRedirect("/login");
-//            return false;
-//        }
 
         return true;
     }

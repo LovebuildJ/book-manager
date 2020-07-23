@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ public class UserService implements UserDetailsService{
      * @param users 用户对象
      * @return true or false
      */
+    @Transactional
     public boolean updateUser(Users users) {
         return usersMapper.updateUsers(BeanUtil.beanToMap(users))>0;
     }
@@ -128,5 +130,13 @@ public class UserService implements UserDetailsService{
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
         // 数据库密码是明文, 需要加密进行比对
         return new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), authorities);
+    }
+
+    /**
+     * 用户名查询用户信息
+     * @param username 用户名
+     */
+    public Users findByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 }
