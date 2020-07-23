@@ -169,16 +169,19 @@
 
     // 借阅图书
     function borrowBook(id) {
-        console.log("update Book"+id);
-
-        // 借阅, 用户可借数量减一, 图书数量减一 , 注意界限判断
-
-
-
-        // 借阅完成, 重新加载
-        window.location.reload();
+        javaex.confirm({
+            content : "确定要借阅么",
+            callback : "forwardBorrow("+id+")"
+        });
     }
 
+    function forwardBorrow(id) {
+
+        var url = "/borrow/borrow?id="+id;
+        // 跳转借阅界面
+        window.location.href = "/borrow/borrow?id="+id;
+        // $("#bb", parent.document).click();
+    }
 </script>
 </body>
 </html>
