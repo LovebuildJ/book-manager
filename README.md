@@ -13,7 +13,7 @@
 - 安全框架： SpringSecurity
 - 模板引擎： Thymeleaf
 - API文档&测试： Swagger2
-
+- API文档美化： Swagger-Bootstrap-UI, 这个很好看, 但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
 
 前端：
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
