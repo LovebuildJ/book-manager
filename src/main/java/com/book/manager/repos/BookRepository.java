@@ -12,5 +12,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book,Integer> {
 
-
+    /**
+     * ISBN编码查询
+     * @param isbn
+     * @return
+     */
+    Book findByIsbn(String isbn);
 }

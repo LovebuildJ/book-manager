@@ -3,7 +3,7 @@ package com.book.manager.cache;
 import java.util.HashMap;
 
 /**
- * @Description 用户缓存
+ * @Description 用户缓存, new: 现已使用SpringSecurity , 弃用此类
  * <p>
  *     摒弃Session, 自己在服务器端维护一个会话
  *     1. 记录用户信息

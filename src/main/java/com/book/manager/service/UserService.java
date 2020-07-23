@@ -41,13 +41,18 @@ public class UserService implements UserDetailsService{
     private PasswordEncoder passwordEncoder;
 
     /**
-     * 获取所有用户, 分页
+     * 获取所有用户, 分页(鉴于jpa分页过于繁琐, 已使用mybatis, page helper分页, 此方法弃用)
      * @param pageable 分页对象
      */
     public Page<Users> getUsers(String keyword,Pageable pageable) {
         return usersRepository.findByUsernameLike(keyword,pageable);
     }
 
+    /**
+     * 登录 (使用SpringSecurity 此方法弃用)
+     * @param username 用户名
+     * @param password 密码
+     */
     public Users login(String username,String password) {
        return usersRepository.findByUsernameAndPassword(username,password);
     }
@@ -108,8 +113,7 @@ public class UserService implements UserDetailsService{
 
     /**
      * 用户鉴权
-     * @param username
-     * @return
+     * @param username 用户名
      * @throws UsernameNotFoundException
      */
     @Override

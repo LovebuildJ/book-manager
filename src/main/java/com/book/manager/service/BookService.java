@@ -68,6 +68,22 @@ public class BookService {
     }
 
     /**
+     * ISBN查询
+     * @param isbn
+     * @return
+     */
+    public BookOut findBookByIsbn(String isbn) {
+        Book book = bookRepository.findByIsbn(isbn);
+        BookOut out = new BookOut();
+        if (book == null) {
+            return out;
+        }
+        BeanUtil.copyProperties(book,out);
+        out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
+        return out;
+    }
+
+    /**
      * 删除图书
      * @param id 主键
      * @return true or false
