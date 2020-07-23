@@ -1,5 +1,6 @@
 package com.book.manager.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,17 +24,23 @@ import java.util.Date;
 @Table(name = "borrow")
 public class Borrow {
 
+    @ApiModelProperty("主键ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ApiModelProperty("用户ID")
     private Integer userId;
 
+    @ApiModelProperty("图书ID")
     private Integer bookId;
 
+    @ApiModelProperty("借阅时间")
     private Date createTime;
 
+    @ApiModelProperty("归还时间")
     private Date endTime;
 
+    @ApiModelProperty("实际归还时间")
     private Date updateTime;
 }
