@@ -4,19 +4,14 @@ import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
 import com.book.manager.util.http.CodeEnum;
-import com.book.manager.util.po.PageOut;
-import com.book.manager.util.vo.PageIn;
+import com.book.manager.util.vo.PageOut;
+import com.book.manager.util.ro.PageIn;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @Description 用户管理

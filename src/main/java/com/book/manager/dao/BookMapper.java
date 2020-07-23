@@ -1,7 +1,6 @@
 package com.book.manager.dao;
 
 import com.book.manager.entity.Book;
-import com.book.manager.util.po.BookOut;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

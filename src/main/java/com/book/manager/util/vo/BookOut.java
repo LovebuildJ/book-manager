@@ -1,4 +1,4 @@
-package com.book.manager.util.po;
+package com.book.manager.util.vo;
 
 import lombok.Data;
 

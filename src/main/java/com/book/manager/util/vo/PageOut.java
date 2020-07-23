@@ -1,4 +1,4 @@
-package com.book.manager.util.po;
+package com.book.manager.util.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

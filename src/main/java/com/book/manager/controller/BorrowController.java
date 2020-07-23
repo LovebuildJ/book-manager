@@ -1,15 +1,9 @@
 package com.book.manager.controller;
 
-import com.book.manager.entity.Book;
 import com.book.manager.entity.Borrow;
-import com.book.manager.entity.Users;
-import com.book.manager.service.BookService;
 import com.book.manager.service.BorrowService;
 import com.book.manager.util.R;
 import com.book.manager.util.http.CodeEnum;
-import com.book.manager.util.po.PageOut;
-import com.book.manager.util.vo.PageIn;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
