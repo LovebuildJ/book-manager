@@ -13,7 +13,7 @@
 - 安全框架： SpringSecurity
 - 模板引擎： Thymeleaf
 - API文档&测试： Swagger2
-- API文档美化： Swagger-Bootstrap-UI, 这个很好看, 但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
+- API文档加强&美化： Swagger-Bootstrap-UI, 这个很好看, 而且功能强大,支持生成离线MD文档,但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
 
 前端：
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
@@ -32,7 +32,7 @@
 2.  配置maven, 等待依赖下载完成
 3.  启动访问http://localhost:8080 即可
 4.  默认登录： admin/123
-5.  swagger API在线文档, 启动访问：http://localhost:8080/swagger-ui.html
+5.  swagger API在线文档, 启动访问：http://localhost:8080/doc.html
 #### 使用说明
 
 1.  本项目适用于大学生实训, 或者个人学习使用

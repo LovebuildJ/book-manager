@@ -270,7 +270,7 @@
                                 content : msg,
                                 type : "error"
                             });
-                            setTimeout(function(){},1000)
+                            setTimeout(function(){},1500)
 						}
 
                     },
@@ -294,8 +294,8 @@
 
     // 监听点击返回按钮事件
     $("#return").click(function() {
-        alert("返回");
-        // window.location.href = document.referrer;
+        // alert("返回");
+        window.location.href = "/borrow/book-search";
     });
 
     // 日期格式化

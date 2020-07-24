@@ -18,4 +18,10 @@ public final class Constants {
     public static final int NO = 1;
     /**　一切正常　*/
     public static final int OK = 1;
+    /** 是 */
+    public static final String YES_STR = "是";
+    /** 否 */
+    public static final String NO_STR = "否";
+    /** 日期格式 */
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 }

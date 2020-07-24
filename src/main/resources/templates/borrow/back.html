@@ -39,77 +39,56 @@
 			<form id="form">
 				<!--文本框-->
 				<div class="unit clear">
-					<div class="left"><span class="required">*</span><p class="subtitle">登录账号</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">用户名</p></div>
 					<div class="right">
-						<input type="text" class="text" data-type="手机号|邮箱" error-msg="手机号或邮箱格式错误" error-pos="42" placeholder="请输入手机号或邮箱" />
+						<input type="text" class="text" name="username" id="username" readonly />
 					</div>
 				</div>
-				
-				<!--单选框-->
+
 				<div class="unit clear">
-					<div class="left"><p class="subtitle">性别</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">昵称</p></div>
 					<div class="right">
-						<ul class="equal-8 clear">
-							<li><input type="radio" class="fill" name="sex" checked/>男</li>
-							<li><input type="radio" class="fill" name="sex" />女</li>
-						</ul>
+						<input type="text" class="text" name="nickname" id="nickname" readonly />
 					</div>
 				</div>
-				
-				<!--复选框-->
+
 				<div class="unit clear">
-					<div class="left"><p class="subtitle">兴趣</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">身份</p></div>
 					<div class="right">
-						<ul class="equal-8 clear">
-							<li><input type="checkbox" class="fill" name="interest" />吃饭</li>
-							<li><input type="checkbox" class="fill" name="interest" />睡觉</li>
-							<li><input type="checkbox" class="fill" name="interest" />打豆豆</li>
-						</ul>
+						<input type="text" class="text" name="identity" id="identity" readonly />
 					</div>
 				</div>
-				
-				<!--下拉选择框-->
+
 				<div class="unit clear">
-					<div class="left"><p class="subtitle">学历</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">可借数量</p></div>
 					<div class="right">
-						<select id="select">
-							<option value="">请选择</option>
-							<option value="1">大专</option>
-							<option value="2">本科</option>
-							<option value="3">硕士</option>
-							<option value="4">博士</option>
-							<option value="5">博士后</option>
-						</select>
+						<input type="text" class="text" name="size" id="size" readonly />
 					</div>
 				</div>
-				
-				<!--日期选择框-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">注册时间</p></div>
-					<div class="right">
-						<input type="text" id="date" class="ex-date" style="width: 180px;" value="" readonly/>
-					</div>
-				</div>
-				
-				<!--文本域-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">简介</p></div>
-					<div class="right">
-						<textarea class="desc" placeholder="请填写简介"></textarea>
-						<!--提示说明-->
-						<p class="hint">请填写个人简介。简介中不得包含令人反感的信息，且长度应在10到255个字符之间。</p>
-					</div>
-				</div>
-				
-				<!--标签-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">标签</p></div>
-					<div class="right">
-						<div class="tagbox"></div>
-						<input type="hidden" id="tag" name="tag" value="" />
-					</div>
-				</div>
-				
+
+				<div class="left"><span class="required">*</span><p class="subtitle">已借阅列表</p></div>
+				<!-- 已借阅列表 -->
+				<table id="table" class="table color2">
+					<thead>
+					<tr align="center">
+						<th>序号</th>
+						<th>书名</th>
+						<th>作者</th>
+						<th>ISBN</th>
+						<th>页数</th>
+						<th>定价</th>
+						<th>出版社</th>
+						<th>分类</th>
+						<th>借阅时间</th>
+						<th>应还时间</th>
+						<th>是否逾期</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody id="tbody">
+					</tbody>
+				</table>
+
 				<!--提交按钮-->
 				<div class="unit clear" style="width: 800px;">
 					<div style="text-align: center;">
@@ -124,42 +103,58 @@
 </div>
 
 <script>
-	javaex.select({
-		id : "select",
-		isSearch : false
+
+
+    $(document).ready(function(){
+        // 1. 先查询用户信息
+        $.get("/user/currUser", function(data){
+            var user = data.data;
+            // 渲染用户数据
+            $("#username").val(user.username);
+            $("#nickname").val(user.nickname);
+            $("#identity").val(user.identity);
+            $("#size").val(user.size);
+
+            // 2. 查询用户借阅信息, 并渲染借阅列表
+            $.get("/borrow/borrowed",{"userId":user.id} ,function(result){
+                var text  = "";
+                var backArray = result.data;
+                // 渲染用户数据
+                $.each(backArray,function(index,value){
+                    console.log(value);
+                    var num = index+1;
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
+                        "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.type+"</td>" +
+                        "<td>"+value.borrowTime+"</td><td>"+value.endTime+"</td><td>"+value.late+"</td><td>"+
+                        "<button class='button blue empty' onclick='returnBook("+value.id+")'>归还图书</td></tr>";
+                });
+
+                $("#tbody").html(text);
+            });
+		});
+
+
+
 	});
-	
-	javaex.date({
-		id : "date",	// 承载日期组件的id
-		isTime : true,
-		date : "2018-04-15 01:01:01",	// 选择的日期
-		// 重新选择日期之后返回一个时间对象
-		callback : function(rtn) {
-			alert(rtn.date);
-		}
-	});
-	
-	javaex.tag({
-		id : "tag"
-	});
-	
+
+
+	// 3. 归还操作
+
+
 	// 监听点击保存按钮事件
 	$("#save").click(function() {
-		// 表单验证函数
-		if (javaexVerify()) {
-			// 返回错误信息时，可以添加自定义异常提示。参数为元素id和提示
-			// addErrorMsg("username", "用户名不存在");
-			// 提交
-			// $("#form").submit();
-			alert("验证通过");
-		}
+
 	});
 
 	// 监听点击返回按钮事件
 	$("#return").click(function() {
-		alert("返回");
 		// window.location.href = document.referrer;
 	});
+
+
+	function returnBook(id) {
+		alert("归还图书");
+    }
 </script>
 </body>
 </html>

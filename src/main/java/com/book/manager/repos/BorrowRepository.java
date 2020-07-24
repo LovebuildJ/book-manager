@@ -23,6 +23,14 @@ public interface BorrowRepository extends JpaRepository<Borrow,Integer>{
     List<Borrow> findBorrowByUserId(Integer userId);
 
     /**
+     * 查询已借阅信息
+     * @param userId 用户id
+     * @param ret 是否归还, 0 已归还/ 1 未归还
+     * @return
+     */
+    List<Borrow> findBorrowsByUserIdAndRet(@Param("userId") Integer userId,@Param("ret")Integer ret);
+
+    /**
      * 查询用户某一条借阅信息
      * @param userId 用户id
      * @param bookId 图书id
