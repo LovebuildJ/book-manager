@@ -11,4 +11,28 @@
         <result column="ret" property="ret" jdbcType="INTEGER" />
     </resultMap>
 
+    <update id="updateBor" parameterType="map">
+        update borrow
+        <set>
+            <if test="userId != null">
+              user_id = #{userId},
+            </if>
+            <if test="bookId != null">
+              book_id = #{bookId},
+            </if>
+            <if test="createTime != null">
+             create_time = #{createTime},
+            </if>
+            <if test="endTime != null">
+             end_time = #{endTime},
+            </if>
+            <if test="updateTime != null">
+             update_time = #{updateTime},
+            </if>
+            <if test="ret != null">
+             ret = #{ret},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

@@ -59,7 +59,7 @@ public class Users {
     @ApiModelProperty("可借数量")
     private Integer size;
 
-    @ApiModelProperty("身份")
+    @ApiModelProperty("身份：0 学生,1 教师,2 管理员")
     private Integer identity;
 
 }

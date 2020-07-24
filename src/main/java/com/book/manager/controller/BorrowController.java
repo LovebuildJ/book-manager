@@ -7,6 +7,7 @@ import com.book.manager.service.BorrowService;
 import com.book.manager.util.R;
 import com.book.manager.util.consts.Constants;
 import com.book.manager.util.http.CodeEnum;
+import com.book.manager.util.ro.RetBookIn;
 import com.book.manager.util.vo.BackOut;
 import com.book.manager.util.vo.BookOut;
 import io.swagger.annotations.Api;
@@ -69,7 +70,7 @@ public class BorrowController {
         return R.success(CodeEnum.SUCCESS,borrowService.findById(id));
     }
 
-    @ApiOperation("归还图书")
+    @ApiOperation("删除归还记录")
     @GetMapping("/delete")
     public R delBorrow(Integer id) {
         borrowService.deleteBorrow(id);
@@ -107,6 +108,15 @@ public class BorrowController {
         }
 
         return R.success(CodeEnum.SUCCESS,outs);
+    }
+
+    @ApiOperation("归还书籍")
+    @PostMapping("/ret")
+    public R retBook(@RequestBody RetBookIn in) {
+        if (in == null) {
+            return R.fail(CodeEnum.PARAM_ERROR);
+        }
+        return R.success(CodeEnum.SUCCESS,borrowService.retBook(in.getUserId(),in.getBookId()));
     }
 
 }

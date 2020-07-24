@@ -1,5 +1,6 @@
 package com.book.manager.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.book.manager.dao.BookMapper;
 import com.book.manager.dao.BorrowMapper;
 import com.book.manager.dao.UsersMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +81,9 @@ public class BorrowService {
             return Constants.USER_SIZE_NOT_ENOUGH;
         }
 
-        // 添加借阅信息
+
+        // 添加借阅信息, 借阅默认为未归还状态
+        borrow.setRet(Constants.NO);
         borrowRepository.saveAndFlush(borrow);
 
         // 一切正常
@@ -119,6 +123,14 @@ public class BorrowService {
         return borrowMapper.updateBorrow(borrow)>0;
     }
 
+
+    /**
+     * 编辑
+     */
+    public Borrow updateBorrowByRepo(Borrow borrow) {
+        return borrowRepository.saveAndFlush(borrow);
+    }
+
     /**
      * s删除
      */
@@ -133,5 +145,33 @@ public class BorrowService {
      */
     public Borrow findBorrowByUserIdAndBookId(int userId,int bookId) {
         return borrowMapper.findBorrowByUserIdAndBookId(userId,bookId);
+    }
+
+    /**
+     * 归还书籍, 使用事务保证 ACID
+     * @param userId 用户Id
+     * @param bookId 书籍id
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean retBook(int userId,int bookId) {
+        // 用户可借数量加1
+        Users user = userService.findUserById(userId);
+        Integer size = user.getSize();
+        size++;
+        user.setSize(size);
+        userService.updateUser(user);
+
+
+        // 书籍库存加1
+        Book book = bookService.findBook(bookId);
+        Integer bookSize = book.getSize();
+        bookSize++;
+        book.setSize(bookSize);
+        bookService.updateBook(book);
+        // 借阅记录改为已归还,删除记录
+        Borrow borrow = this.findBorrowByUserIdAndBookId(userId, bookId);
+        borrow.setRet(Constants.YES);
+        borrow.setUpdateTime(new Date());
+        return borrowMapper.updateBor(BeanUtil.beanToMap(borrow))>0;
     }
 }

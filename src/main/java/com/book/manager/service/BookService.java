@@ -47,7 +47,6 @@ public class BookService {
      * @param book 图书对象
      * @return true or false
      */
-    @Transactional
     public boolean updateBook(Book book) {
         return bookMapper.updateBook(BeanUtil.beanToMap(book))>0;
     }

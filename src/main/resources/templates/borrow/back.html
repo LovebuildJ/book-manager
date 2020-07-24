@@ -90,13 +90,13 @@
 				</table>
 
 				<!--提交按钮-->
-				<div class="unit clear" style="width: 800px;">
-					<div style="text-align: center;">
-						<!--表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数-->
-						<input type="button" id="return" class="button no" value="返回" />
-						<input type="button" id="save" class="button yes" value="保存" />
-					</div>
-				</div>
+				<!--<div class="unit clear" style="width: 800px;">-->
+					<!--<div style="text-align: center;">-->
+						<!--&lt;!&ndash;表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数&ndash;&gt;-->
+						<!--<input type="button" id="return" class="button no" value="返回" />-->
+						<!--<input type="button" id="save" class="button yes" value="保存" />-->
+					<!--</div>-->
+				<!--</div>-->
 			</form>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
             // 渲染用户数据
             $("#username").val(user.username);
             $("#nickname").val(user.nickname);
-            $("#identity").val(user.identity);
+            $("#identity").val(user.ident);
             $("#size").val(user.size);
 
             // 2. 查询用户借阅信息, 并渲染借阅列表
@@ -126,7 +126,7 @@
                     text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
                         "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.type+"</td>" +
                         "<td>"+value.borrowTime+"</td><td>"+value.endTime+"</td><td>"+value.late+"</td><td>"+
-                        "<button class='button blue empty' onclick='returnBook("+value.id+")'>归还图书</td></tr>";
+                        "<button class='button blue empty' onclick='retBook("+user.id+","+value.id+")'>归还图书</td></tr>";
                 });
 
                 $("#tbody").html(text);
@@ -139,22 +139,42 @@
 
 
 	// 3. 归还操作
+	function retBook(userId,bookId) {
+	    // alert(userId+" ============= "+bookId);
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/borrow/ret",
+            //数据，json字符串
+            data : JSON.stringify({"userId":userId,"bookId":bookId}),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                var code = result.code;
+                alert(code);
+                if (code == 200) {
+                    javaex.message({
+                        content : "归还成功",
+                        type : "success"
+                    });
+                    // 跳转至列表
+                    setTimeout(function(){
+                        window.location.reload();
+                        },1800)
+                }
 
-
-	// 监听点击保存按钮事件
-	$("#save").click(function() {
-
-	});
-
-	// 监听点击返回按钮事件
-	$("#return").click(function() {
-		// window.location.href = document.referrer;
-	});
-
-
-	function returnBook(id) {
-		alert("归还图书");
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
     }
+
 </script>
 </body>
 </html>

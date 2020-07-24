@@ -5,12 +5,15 @@ import cn.hutool.core.util.StrUtil;
 import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
+import com.book.manager.util.consts.Constants;
 import com.book.manager.util.http.CodeEnum;
 import com.book.manager.util.vo.PageOut;
 import com.book.manager.util.ro.PageIn;
+import com.book.manager.util.vo.UserOut;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +85,21 @@ public class UsersController {
             String username = (String) map.get("username");
             if (StrUtil.isNotBlank(username)) {
                 Users users = userService.findByUsername(username);
-                return R.success(CodeEnum.SUCCESS,users);
+                UserOut out = new UserOut();
+                BeanUtils.copyProperties(users,out);
+                Integer identity = users.getIdentity();
+                String ident = "";
+                if (identity == Constants.STUDENT) {
+                    ident = Constants.STU_STR;
+                }else if (identity == Constants.TEACHER) {
+                    ident = Constants.TEA_STR;
+                }else if (identity == Constants.OTHER) {
+                    ident = Constants.OTHER_STR;
+                }else if (identity == Constants.ADMIN) {
+                    ident = Constants.ADMIN_STR;
+                }
+                out.setIdent(ident);
+                return R.success(CodeEnum.SUCCESS,out);
             }
         }
         return R.fail(CodeEnum.USER_NOT_FOUND);
