@@ -153,7 +153,7 @@ public class BorrowService {
      * @param bookId 书籍id
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean retBook(int userId,int bookId) {
+    public void retBook(int userId,int bookId) {
         // 用户可借数量加1
         Users user = userService.findUserById(userId);
         Integer size = user.getSize();
@@ -170,8 +170,9 @@ public class BorrowService {
         bookService.updateBook(book);
         // 借阅记录改为已归还,删除记录
         Borrow borrow = this.findBorrowByUserIdAndBookId(userId, bookId);
-        borrow.setRet(Constants.YES);
-        borrow.setUpdateTime(new Date());
-        return borrowMapper.updateBor(BeanUtil.beanToMap(borrow))>0;
+//        borrow.setRet(Constants.YES);
+//        borrow.setUpdateTime(new Date());
+//        borrowMapper.updateBor(BeanUtil.beanToMap(borrow))>0;
+        this.deleteBorrow(borrow.getId());
     }
 }

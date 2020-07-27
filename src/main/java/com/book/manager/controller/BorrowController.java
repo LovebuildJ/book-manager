@@ -112,11 +112,10 @@ public class BorrowController {
 
     @ApiOperation("归还书籍")
     @PostMapping("/ret")
-    public R retBook(@RequestBody RetBookIn in) {
-        if (in == null) {
-            return R.fail(CodeEnum.PARAM_ERROR);
-        }
-        return R.success(CodeEnum.SUCCESS,borrowService.retBook(in.getUserId(),in.getBookId()));
+    public R retBook(Integer userId, Integer bookId) {
+        // 归还图书
+        borrowService.retBook(userId,bookId);
+        return R.success(CodeEnum.SUCCESS);
     }
 
 }

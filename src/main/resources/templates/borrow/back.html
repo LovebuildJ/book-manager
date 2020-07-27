@@ -18,6 +18,8 @@
 <script src="../../javaex/pc/js/javaex.min.js"></script>
 <!--表单验证-->
 <script src="../../javaex/pc/js/javaex-formVerify.js"></script>
+<!-- 加入layer弹出层 -->
+<script src="../../layer/layer.js"></script>
 <title>图书归还</title>
 </head>
 <style>
@@ -103,8 +105,6 @@
 </div>
 
 <script>
-
-
     $(document).ready(function(){
         // 1. 先查询用户信息
         $.get("/user/currUser", function(data){
@@ -132,47 +132,33 @@
                 $("#tbody").html(text);
             });
 		});
-
-
-
 	});
 
 
 	// 3. 归还操作
 	function retBook(userId,bookId) {
-	    // alert(userId+" ============= "+bookId);
-        $.ajax({
-            //请求方式
-            type : "POST",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            //请求地址
-            url : "/borrow/ret",
-            //数据，json字符串
-            data : JSON.stringify({"userId":userId,"bookId":bookId}),
-            //请求成功
-            success : function(result) {
-                console.log(result);
-                var code = result.code;
-                alert(code);
-                if (code == 200) {
-                    javaex.message({
-                        content : "归还成功",
-                        type : "success"
-                    });
-                    // 跳转至列表
-                    setTimeout(function(){
-                        window.location.reload();
-                        },1800)
-                }
+	    // 关闭异步, 此处关闭异步的原因是修改和提示异步的话, 提示会直接不可用!
+        $.ajaxSettings.async = false;
+        $.post("/borrow/ret",{"userId":userId,"bookId":bookId},function(result) {
+            var code = result.code;
+            if (code == 200) {
+//                alert("归还成功!");
+                //信息框-例1
+                layer.alert('归还成功!', {icon: 6});
+//                javaex.message({
+//                    content : "归还成功",
+//                    type : "success"
+//                });
 
-            },
-            //请求失败，包含具体的错误信息
-            error : function(e){
-                console.log(e.status);
-                console.log(e.responseText);
+                // 跳转至列表
+//                setTimeout(function(){
+//                    window.location.reload();
+//                },1800)
             }
-        });
+		},"json");
+
+        // 恢复异步
+        $.ajaxSettings.async = true;
     }
 
 </script>
