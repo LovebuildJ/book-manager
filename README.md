@@ -1,7 +1,7 @@
 # book-manager
 
 #### 介绍
-图书管理系统
+图书管理系统 ， 快速使用可看[Wiki](http://https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
 
 
 #### 软件截图
@@ -73,7 +73,7 @@
 - 有意向聊一聊也是可以的蛮, 或许我就是你要找的那个人呢?
 
 #### 安装教程
-
+建议看wiki
 1.  本地搭建好java8环境,数据库MySQL5.5+, 克隆项目
 2.  导入sql文件至数据库中
 3.  配置maven, 等待依赖下载完成
