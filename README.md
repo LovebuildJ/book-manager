@@ -6,6 +6,18 @@
 
 #### 软件截图
 
+- 登录
+![登录](https://images.gitee.com/uploads/images/2020/0728/220039_eac21a26_1865362.png "login.png")
+
+- 图书列表
+![图书列表](https://images.gitee.com/uploads/images/2020/0728/220106_01690382_1865362.png "book-list.png")
+
+- 图书上架
+- ![图书上架](https://images.gitee.com/uploads/images/2020/0728/220142_f1321c49_1865362.png "book-add.png")
+
+- 图书编辑
+![图书编辑](https://images.gitee.com/uploads/images/2020/0728/220205_23718704_1865362.png "book-update.png")
+
 #### 软件架构
 软件架构说明:
 
