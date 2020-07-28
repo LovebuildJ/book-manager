@@ -59,7 +59,9 @@ public class Users {
     @ApiModelProperty("可借数量")
     private Integer size;
 
-    @ApiModelProperty("身份：0 学生,1 教师,2 管理员")
+    @ApiModelProperty("身份：0 学生,1 教师,2 校外人士,3 管理员")
     private Integer identity;
 
+    // json： {"id":id,"avatar":avatar,"nickname":nickname,"username":username,"password":password,"birthday":birthday,"isAdmin":isAdmin,"tel":tel
+    // ,"email":email,"address":address,"size":size,"identity":identity}
 }

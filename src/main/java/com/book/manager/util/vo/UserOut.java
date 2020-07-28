@@ -12,6 +12,6 @@ import lombok.Data;
 @Data
 public class UserOut extends Users{
 
-    @ApiModelProperty("身份(中文：学生/教师/管理员)")
+    @ApiModelProperty("身份(中文：学生/教师/社会人士/管理员)")
     private String ident;
 }

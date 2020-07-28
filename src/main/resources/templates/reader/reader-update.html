@@ -31,7 +31,7 @@
 	<div class="block">
 		<!--修饰块元素名称-->
 		<div class="banner">
-			<p class="tab fixed">添加读者</p>
+			<p class="tab fixed">编辑读者信息</p>
 		</div>
 	
 		<!--正文内容-->
@@ -125,13 +125,35 @@
 </div>
 
 <script>
+
 	javaex.select({
 		id : "select",
 		isSearch : false
 	});
 
+	// 页面加载执行
+    $(document).ready(function(){
+        var id = getQueryVariable("id");
+        // get读取参数
+        $.get("/user/detail",{"id": id}, function(data){
+            var user = data.data;
+            $("#nickname").val(user.nickname);
+            $("#username").val(user.username);
+            $("#password").val(user.password);
+            $("#birthday").val(user.birthday);
+            $("#tel").val(user.tel);
+            $("#email").val(user.email);
+            $("#address").val(user.address);
+            $("#size").val(user.size);
+            $("#select").text(user.identity);
+
+            return false;
+		});
+	});
+
 	// 监听点击保存按钮事件
 	$("#save").click(function() {
+        var id = getQueryVariable("id");
 		// 表单验证函数
 		var nickname = $("#nickname").val();
 		var username = $("#username").val();
@@ -141,7 +163,7 @@
 		var email = $("#email").val();
 		var address = $("#address").val();
 		var size = $("#size").val();
-        var identity = $('#select option:selected').val();// 身份
+        var identity = $('#select option:selected').text();// 身份
 
 		if (nickname == ""||nickname.length>12) {
             javaex.message({
@@ -167,14 +189,15 @@
             return false;
         }
 
-		var json = {"nickname":nickname,"username":username,"password":password,"birthday":birthday,"tel":tel,"email":email,"address":address,"size":size,"identity":identity};
+
+		var json = {"id":id,"nickname":nickname,"username":username,"password":password,"birthday":birthday,"tel":tel,"email":email,"address":address,"size":size,"identity":identity};
         $.ajax({
             //请求方式
             type : "POST",
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
             //请求地址
-            url : "/user/add_reader",
+            url : "/user/update",
             //数据，json字符串
             data : JSON.stringify(json),
             //请求成功
@@ -186,11 +209,11 @@
 
                 if (code == 200) {
                     javaex.message({
-                        content : "添加成功",
+                        content : "修改信息成功",
                         type : "success"
                     });
 
-                    // 跳转至列表
+					// 跳转至列表
                     setTimeout(function(){window.location.href="/reader/reader-list";},1500)
                 }
 

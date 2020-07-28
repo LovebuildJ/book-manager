@@ -35,6 +35,6 @@ public final class Constants {
     /** 身份 */
     public static final String STU_STR = "学生";
     public static final String TEA_STR = "教师";
-    public static final String OTHER_STR = "其他";
+    public static final String OTHER_STR = "社会人士";
     public static final String ADMIN_STR = "管理员";
 }

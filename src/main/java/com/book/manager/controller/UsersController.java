@@ -6,6 +6,7 @@ import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
 import com.book.manager.util.consts.Constants;
+import com.book.manager.util.consts.ConvertUtil;
 import com.book.manager.util.http.CodeEnum;
 import com.book.manager.util.vo.PageOut;
 import com.book.manager.util.ro.PageIn;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,16 +48,36 @@ public class UsersController {
         pageOut.setCurrPage(userList.getPageNum());
         pageOut.setPageSize(userList.getPageSize());
         pageOut.setTotal((int) userList.getTotal());
-        pageOut.setList(userList.getList());
+        List<UserOut> outs = new ArrayList<>();
+        for (Users users : userList.getList()) {
+            UserOut out = new UserOut();
+            BeanUtils.copyProperties(users,out);
+            out.setIdent(ConvertUtil.identStr(users.getIdentity()));
+            outs.add(out);
+        }
+
+        pageOut.setList(outs);
 
         return R.success(CodeEnum.SUCCESS,pageOut);
     }
 
     @ApiOperation("添加用户")
     @PostMapping("/add")
-    public R getUsers(@RequestBody Users users) {
+    public R addUsers(@RequestBody Users users) {
         return R.success(CodeEnum.SUCCESS,userService.addUser(users));
     }
+
+    @ApiOperation("添加读者")
+    @PostMapping("/add_reader")
+    public R addReader(@RequestBody Users users) {
+        if (users == null) {
+            return R.fail(CodeEnum.PARAM_ERROR);
+        }
+        // 读者默认是普通用户
+        users.setIsAdmin(1);
+        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
+    }
+
 
     @ApiOperation("编辑用户")
     @PostMapping("/update")
