@@ -199,7 +199,7 @@
         var isbn = $("#isbn").val();
         var author = $("#author").val();
         var select = $('#select option:selected').text();// 类目
-		if (select == "") {
+		if (select == ""||select == "请选择") {
 		    select = $("#type").text();
 		}
         var pages = $("#pages").val();
