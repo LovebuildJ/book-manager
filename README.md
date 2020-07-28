@@ -5,6 +5,8 @@
 
 
 #### 软件截图
+- 在线API接口文档
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0728/222829_12c75a2b_1865362.png "swagger.png")
 
 - 登录
 ![登录](https://images.gitee.com/uploads/images/2020/0728/220039_eac21a26_1865362.png "login.png")
