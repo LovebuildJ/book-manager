@@ -122,7 +122,7 @@
                     text+= "<tr align='center'><td>"+num+"</td><td>"+value.nickname+"</td><td>"+value.username+"</td><td>"+value.birth+"</td>" +
                         "<td>"+value.tel+"</td><td>"+value.email+"</td><td>"+value.address+"</td><td>"+value.size+"</td>" +
                         "<td>"+value.ident+"</td><td>"+
-                        "<button class='button green' onclick='updateUser("+value.id+")'>提权</button> &nbsp;<button class='button yellow empty' onclick='delUser("+value.id+")'>删除</button></td></tr>";
+                        "<button class='button green' onclick='updateUser("+value.id+","+value.isAdmin+")'>提权</button> &nbsp;<button class='button yellow empty' onclick='delUser("+value.id+")'>删除</button></td></tr>";
                 });
 
                 $("#tbody").html(text);
@@ -164,9 +164,45 @@
     }
 
     // 编辑
-    function updateUser(id) {
+    function updateUser(id,isAdmin) {
         console.log("update reader"+id);
-        window.location.href="/reader/reader-update?id="+id;
+        if (isAdmin == 0) {
+            javaex.message({
+                content : "已经是管理员权限!",
+                type : "error"
+            });
+		}else if (isAdmin == 1) {
+            $.ajax({
+                //请求方式
+                type : "POST",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //请求地址
+                url : "/user/update",
+                //数据，json字符串
+                data : JSON.stringify({"id":id,"isAdmin": 0}),
+                //请求成功
+                success : function(result) {
+                    console.log(result);
+                    var code = result.code;
+                    if (code == 200) {
+                        javaex.message({
+                            content : "提升至管理员权限成功!",
+                            type : "success"
+                        });
+
+                        // 跳转至列表
+                        setTimeout(function(){window.location.href="/user/user-list";},1500)
+					}
+
+                },
+                //请求失败，包含具体的错误信息
+                error : function(e){
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+		}
     }
 
     // 删除
