@@ -6,7 +6,7 @@
 #### 软件架构
 软件架构说明:
 
-后端：
+##### 后端：
 - 基础框架： SpringBoot
 - 简单数据操作： Spring Data Jpa
 - 复杂数据操作： Mybatis
@@ -15,7 +15,7 @@
 - API文档&测试： Swagger2
 - API文档加强&美化： Swagger-Bootstrap-UI, 这个很好看, 而且功能强大,支持生成离线MD文档,但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
 
-前端：
+##### 前端：
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
 修改起来比较方便, 所以就用了。想了解的, 百度JavaEx即可。
 
@@ -30,12 +30,13 @@
 
 #### 安装教程
 
-1.  本地搭建好java8环境, 克隆项目
-2.  配置maven, 等待依赖下载完成
-3.  IDE安装好lombok插件
-4.  启动访问http://localhost:8080 即可
-5.  账号：【学生： stu/123】【教师： tea/123】【其他：other/123】【管理员：admin/123】
-6.  swagger API在线文档, 启动访问：http://localhost:8080/doc.html
+1.  本地搭建好java8环境,数据库MySQL5.5+, 克隆项目
+2.  导入sql文件至数据库中
+3.  配置maven, 等待依赖下载完成
+4.  IDE安装好lombok插件
+5.  启动访问http://localhost:8080 即可
+6.  账号：【学生： stu/123】【教师： tea/123】【其他：other/123】【管理员：admin/123】
+7.  swagger API在线文档, 启动访问：http://localhost:8080/doc.html
 #### 使用说明
 
 1.  本项目适用于大学生实训, 或者想要快速搭建一个后台管理类项目的朋友,或者个人学习使用
