@@ -62,3 +62,12 @@ https://github.com/LovebuildJ/book-manager
 3.  提交代码
 4.  新建 Pull Request
 5.  等待审核
+
+#### 后续
+
+1. 发现BUG或者已知问题会不定期修复
+2. 加入图片上传下载等功能
+3. 优化权限模块
+4. 优化UI, 提示等用户体验
+5. 加入docker部署
+...
