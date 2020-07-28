@@ -1,20 +1,20 @@
 package com.book.manager.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import com.book.manager.dao.BookMapper;
-import com.book.manager.dao.UsersMapper;
 import com.book.manager.entity.Book;
-import com.book.manager.entity.Users;
 import com.book.manager.repos.BookRepository;
-import com.book.manager.repos.UsersRepository;
-import com.book.manager.util.vo.PageIn;
+import com.book.manager.util.vo.BookOut;
+import com.book.manager.util.vo.PageOut;
+import com.book.manager.util.ro.PageIn;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,12 +56,40 @@ public class BookService {
      * @param id 主键
      * @return 图书详情
      */
-    public Book findBookById(Integer id) {
+    public BookOut findBookById(Integer id) {
+        Optional<Book> optional = bookRepository.findById(id);
+        if (optional.isPresent()) {
+            Book book = optional.get();
+            BookOut out = new BookOut();
+            BeanUtil.copyProperties(book,out);
+            out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
+            return out;
+        }
+        return null;
+    }
+
+    public Book findBook(Integer id) {
         Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             return optional.get();
         }
         return null;
+    }
+
+    /**
+     * ISBN查询
+     * @param isbn
+     * @return
+     */
+    public BookOut findBookByIsbn(String isbn) {
+        Book book = bookRepository.findByIsbn(isbn);
+        BookOut out = new BookOut();
+        if (book == null) {
+            return out;
+        }
+        BeanUtil.copyProperties(book,out);
+        out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
+        return out;
     }
 
     /**
@@ -79,11 +107,27 @@ public class BookService {
      * @param pageIn
      * @return
      */
-    public PageInfo<Users> getBookList(PageIn pageIn) {
+    public PageOut getBookList(PageIn pageIn) {
 
         PageHelper.startPage(pageIn.getCurrPage(),pageIn.getPageSize());
-        List<Users> listByLike = bookMapper.findBookListByLike(pageIn.getKeyword());
-        return new PageInfo<>(listByLike);
+        List<Book> list = bookMapper.findBookListByLike(pageIn.getKeyword());
+        PageInfo<Book> pageInfo = new PageInfo<>(list);
+
+        List<BookOut> bookOuts = new ArrayList<>();
+        for (Book book : pageInfo.getList()) {
+            BookOut out = new BookOut();
+            BeanUtil.copyProperties(book,out);
+            out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
+            bookOuts.add(out);
+        }
+
+        // 自定义分页返回对象
+        PageOut pageOut = new PageOut();
+        pageOut.setList(bookOuts);
+        pageOut.setTotal((int)pageInfo.getTotal());
+        pageOut.setCurrPage(pageInfo.getPageNum());
+        pageOut.setPageSize(pageInfo.getPageSize());
+        return pageOut;
     }
 
 

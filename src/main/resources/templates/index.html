@@ -34,7 +34,7 @@
 				<li>
 					<a href="javascript:;">欢迎您，管理员</a>
 					<ul class="dropdown-menu" style="right: 10px;">
-						<li><a href="/admin/logout">退出当前账号</a></li>
+						<li><a href="/logout">退出当前账号</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -125,5 +125,10 @@
 	function page(url) {
 		$("#page").attr("src", url);
 	}
+
+    $(document).ready(function(){
+        // 页面一加载, 读取登录用户信息
+
+    });
 </script>
 </html>

@@ -25,6 +25,31 @@
 </style>
 
 <body>
-    
+
+<script type="text/javascript">
+    // ajax 示例
+    $.ajax({
+        //请求方式
+        type : "POST",
+        //请求的媒体类型
+        contentType: "application/json;charset=UTF-8",
+        //请求地址
+        url : "/book/list",
+        //数据，json字符串
+        data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
+        //请求成功
+        success : function(result) {
+            console.log(result);
+            // 获取集合属性
+            var r = result.data;
+
+        },
+        //请求失败，包含具体的错误信息
+        error : function(e){
+            console.log(e.status);
+            console.log(e.responseText);
+        }
+    });
+</script>
 </body>
 </html>

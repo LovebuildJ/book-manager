@@ -2,6 +2,7 @@ package com.book.manager.repos;
 
 import com.book.manager.entity.Borrow;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +21,19 @@ public interface BorrowRepository extends JpaRepository<Borrow,Integer>{
      * @return
      */
     List<Borrow> findBorrowByUserId(Integer userId);
+
+    /**
+     * 查询已借阅信息
+     * @param userId 用户id
+     * @param ret 是否归还, 0 已归还/ 1 未归还
+     * @return
+     */
+    List<Borrow> findBorrowsByUserIdAndRet(@Param("userId") Integer userId,@Param("ret")Integer ret);
+
+    /**
+     * 查询用户某一条借阅信息
+     * @param userId 用户id
+     * @param bookId 图书id
+     */
+    Borrow findBorrowByUserIdAndBookId(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

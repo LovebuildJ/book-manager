@@ -26,4 +26,18 @@ public interface UsersRepository extends JpaRepository<Users,Integer>{
      */
     @Query(value="select * from users where username like CONCAT('%',:keyword,'%') limit  ",nativeQuery=true)
     Page<Users> findByUsernameLike(@Param(value = "keyword") String keyword,Pageable pageable);
+
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password 密码
+     */
+    Users findByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+
+    /**
+     * 用户名查询
+     * @param username
+     * @return
+     */
+    Users findByUsername(@Param("username") String username);
 }

@@ -1,22 +1,27 @@
 package com.book.manager.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
 import com.book.manager.util.R;
+import com.book.manager.util.consts.Constants;
+import com.book.manager.util.consts.ConvertUtil;
 import com.book.manager.util.http.CodeEnum;
-import com.book.manager.util.po.PageOut;
-import com.book.manager.util.vo.PageIn;
+import com.book.manager.util.vo.PageOut;
+import com.book.manager.util.ro.PageIn;
+import com.book.manager.util.vo.UserOut;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description 用户管理
@@ -24,7 +29,7 @@ import java.util.List;
  * @Author by 尘心
  */
 @Api(tags = "用户管理")
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UsersController {
 
@@ -32,7 +37,6 @@ public class UsersController {
     private UserService userService;
 
     @ApiOperation("用户列表")
-    @ResponseBody
     @PostMapping("/list")
     public R getUsers(@RequestBody PageIn pageIn) {
         if (pageIn == null) {
@@ -44,20 +48,38 @@ public class UsersController {
         pageOut.setCurrPage(userList.getPageNum());
         pageOut.setPageSize(userList.getPageSize());
         pageOut.setTotal((int) userList.getTotal());
-        pageOut.setList(userList.getList());
+        List<UserOut> outs = new ArrayList<>();
+        for (Users users : userList.getList()) {
+            UserOut out = new UserOut();
+            BeanUtils.copyProperties(users,out);
+            out.setIdent(ConvertUtil.identStr(users.getIdentity()));
+            outs.add(out);
+        }
+
+        pageOut.setList(outs);
 
         return R.success(CodeEnum.SUCCESS,pageOut);
     }
 
     @ApiOperation("添加用户")
-    @ResponseBody
     @PostMapping("/add")
-    public R getUsers(@RequestBody Users users) {
+    public R addUsers(@RequestBody Users users) {
         return R.success(CodeEnum.SUCCESS,userService.addUser(users));
     }
 
+    @ApiOperation("添加读者")
+    @PostMapping("/add_reader")
+    public R addReader(@RequestBody Users users) {
+        if (users == null) {
+            return R.fail(CodeEnum.PARAM_ERROR);
+        }
+        // 读者默认是普通用户
+        users.setIsAdmin(1);
+        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
+    }
+
+
     @ApiOperation("编辑用户")
-    @ResponseBody
     @PostMapping("/update")
     public R modifyUsers(@RequestBody Users users) {
         return R.success(CodeEnum.SUCCESS,userService.updateUser(users));
@@ -65,18 +87,44 @@ public class UsersController {
 
 
     @ApiOperation("用户详情")
-    @ResponseBody
     @GetMapping("/detail")
     public R userDetail(Integer id) {
         return R.success(CodeEnum.SUCCESS,userService.findUserById(id));
     }
 
     @ApiOperation("删除用户")
-    @ResponseBody
     @GetMapping("/delete")
     public R delUsers(Integer id) {
         userService.deleteUser(id);
         return R.success(CodeEnum.SUCCESS);
     }
 
+    @ApiOperation("获取当前用户登陆信息")
+    @GetMapping("/currUser")
+    public R getCurrUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal!=null) {
+            Map<String,Object> map = BeanUtil.beanToMap(principal);
+            String username = (String) map.get("username");
+            if (StrUtil.isNotBlank(username)) {
+                Users users = userService.findByUsername(username);
+                UserOut out = new UserOut();
+                BeanUtils.copyProperties(users,out);
+                Integer identity = users.getIdentity();
+                String ident = "";
+                if (identity == Constants.STUDENT) {
+                    ident = Constants.STU_STR;
+                }else if (identity == Constants.TEACHER) {
+                    ident = Constants.TEA_STR;
+                }else if (identity == Constants.OTHER) {
+                    ident = Constants.OTHER_STR;
+                }else if (identity == Constants.ADMIN) {
+                    ident = Constants.ADMIN_STR;
+                }
+                out.setIdent(ident);
+                return R.success(CodeEnum.SUCCESS,out);
+            }
+        }
+        return R.fail(CodeEnum.USER_NOT_FOUND);
+    }
 }

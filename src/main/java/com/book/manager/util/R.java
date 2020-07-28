@@ -1,6 +1,7 @@
 package com.book.manager.util;
 
 import com.book.manager.util.http.CodeEnum;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
@@ -11,10 +12,13 @@ import java.io.Serializable;
  */
 public class R implements Serializable{
 
+    @ApiModelProperty("响应码")
     private Integer code;
 
+    @ApiModelProperty("响应信息")
     private String msg;
 
+    @ApiModelProperty("响应数据")
     private Object data;
 
     public R() {

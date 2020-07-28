@@ -18,11 +18,11 @@
 <script src="../../javaex/pc/js/javaex.min.js"></script>
 <!--表单验证-->
 <script src="../../javaex/pc/js/javaex-formVerify.js"></script>
-<title>后台管理</title>
+	<title>后台管理</title>
 </head>
 
 <body>
-    <!--主体内容-->
+<!--主体内容-->
 <div class="list-content">
 	<!--块元素-->
 	<div class="block">
@@ -32,88 +32,156 @@
 		<a href="javascript:history.back();">
 			<button class="button indigo radius-3" style="position: absolute;right: 20px;top: 16px;"><span class="icon-arrow_back"></span> 返回</button>
 		</a>
-		
+
 		<!--正文内容-->
 		<div class="main">
 			<!--表格上方的搜索操作-->
-			<div class="admin-search">
+			<div class="main">
 				<div class="input-group">
-					<input type="text" class="text" placeholder="书名/作者/编号" />
-					<button class="button blue">搜索</button>
+					<input id="keyword" type="text" class="text" style="width: 400px" placeholder="搜索想要借阅的图书" />
+					<button id="searchBtn" class="button blue" onclick="search();">搜索</button>
 				</div>
 			</div>
-			<br>
-			
+
 			<!--表格上方的操作元素，添加、删除等-->
-			<!-- <div class="operation-wrap">
+			<!--
+			<div class="operation-wrap">
 				<div class="buttons-wrap">
 					<button class="button blue radius-3"><span class="icon-plus"></span> 添加</button>
 					<button class="button red radius-3"><span class="icon-close2"></span> 删除</button>
 				</div>
-			</div> -->
+			</div>
+			-->
 			<table id="table" class="table color2">
 				<thead>
-					<tr>
-						<th class="checkbox"><input type="checkbox" class="fill listen-1" /> </th>
-						<th>序号</th>
-						<th>市区</th>
-						<th>省区</th>
-						<th>国别</th>
-						<th>国别</th>
-					</tr>
+				<tr align="center">
+					<th>序号</th>
+					<th>书名</th>
+					<th>作者</th>
+					<th>ISBN</th>
+					<th>页数</th>
+					<th>定价</th>
+					<th>出版社</th>
+					<th>出版时间</th>
+					<th>库存数量</th>
+					<th>翻译</th>
+					<th>分类</th>
+					<th>操作</th>
+				</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>1</td>
-						<td>苏州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>2</td>
-						<td>无锡</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>3</td>
-						<td>常州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-					</tr>
+				<tbody id="tbody">
+				<!--<tr>-->
+				<!--<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>-->
+				<!--<td>1</td>-->
+				<!--<td><button class="button blue">编辑</button><button class="button red">删除</button></td>-->
+				<!--</tr>-->
 				</tbody>
-            </table>
-            
-            <div class="page">
-                <ul id="page" class="pagination"></ul>
-            </div>
+			</table>
+
+			<div class="page">
+				<ul id="page" class="pagination"></ul>
+			</div>
 		</div>
-    </div>
+	</div>
 </div>
 
 
-<script>
-	javaex.page({
-		id : "page",
-		pageCount : 12,	// 总页数
-		currentPage : 1,// 默认选中第几页
-		// perPageCount : 10,	// 每页显示多少条，不填时，不显示该条数选择控件
-		isShowJumpPage : false,	// 是否显示跳页
-		totalNum : 125,		// 总条数，不填时，不显示
-		position : "center",
-		callback : function(rtn) {
-			console.log("当前选中的页数：" + rtn.pageNum);
-			console.log("每页显示条数：" + rtn.perPageCount);
-		}
-	});
+<script type="text/javascript">
+
+    // 页面一加载, 展示数据列表, 每页10条
+    $(document).ready(function(){
+        // 默认查询所有
+        rander(1,"",10);
+    });
+
+    // 渲染数据表格
+    function rander(currPage,keyword,pageSize) {
+        // 定义全局 分页属性
+        var total = 0;
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/book/list",
+            //数据，json字符串
+            data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                // 获取集合属性
+                var r = result.data;
+                // 分页信息
+                currPage = r.currPage;
+                pageSize = r.pageSize;
+                total = r.total;
+
+                console.log("currPage:"+currPage+"pageSize:"+pageSize+"total:"+total);
+
+                var array = r.list;
+                var text = "";
+                $.each(array,function(index,value){
+                    console.log(value);
+                    var num = pageSize * (currPage - 1) + index + 1;
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
+                        "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.publishTime+"</td>" +
+                        "<td>"+value.size+"</td><td>"+value.translate+"</td><td>"+value.type+"</td><td>"+
+                        "<button class='button blue empty' onclick='borrowBook("+value.id+")'>借阅</button></td></tr>";
+                });
+
+                $("#tbody").html(text);
+
+                // 向上取整去总页数
+                var totalPage = Math.ceil(total/pageSize);
+                // 清空分页组件
+                $("#page").empty();
+                // 调用分页组件
+                javaex.page({
+                    id : "page",
+                    pageCount : totalPage,	// 总页数
+                    currentPage : currPage,// 默认选中第几页
+                    perPageCount : pageSize,	// 每页显示多少条，不填时，不显示该条数选择控件
+                    isShowJumpPage : false,	// 是否显示跳页
+                    totalNum : total,		// 总条数，不填时，不显示
+                    position : "center",
+                    callback : function(rtn) {
+                        // 翻页
+                        rander(rtn.pageNum,keyword,rtn.perPageCount);
+                    }
+                });
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+
+    // 搜索
+    function search() {
+        // 获取搜索关键字
+        var keyword = $("#keyword").val();
+        // 搜索结果渲染表格
+        rander(1,keyword,10);
+    }
+
+    // 借阅图书
+    function borrowBook(id) {
+        javaex.confirm({
+            content : "确定要借阅么",
+            callback : "forwardBorrow("+id+")"
+        });
+    }
+
+    function forwardBorrow(id) {
+
+        var url = "/borrow/borrow?id="+id;
+        // 跳转借阅界面
+        window.location.href = "/borrow/borrow?id="+id;
+        // $("#bb", parent.document).click();
+    }
 </script>
 </body>
 </html>
