@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta charset="utf-8">
+	<!--字体图标-->
+	<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
+	<!--动画-->
+	<link href="../../javaex/pc/css/animate.css" rel="stylesheet" />
+	<!--骨架样式-->
+	<link href="../../javaex/pc/css/common.css" rel="stylesheet" />
+	<!--皮肤（缇娜）-->
+	<link href="../../javaex/pc/css/skin/tina.css" rel="stylesheet" />
+	<!--jquery，不可修改版本-->
+	<script src="../../javaex/pc/lib/jquery-1.7.2.min.js"></script>
+	<!--全局动态修改-->
+	<script src="../../javaex/pc/js/common.js"></script>
+	<!--核心组件-->
+	<script src="../../javaex/pc/js/javaex.min.js"></script>
+	<!--表单验证-->
+	<script src="../../javaex/pc/js/javaex-formVerify.js"></script>
+	<title>图书借阅</title>
+</head>
+<style>
+
+</style>
+
+<body>
+<!--全部主体内容-->
+<div class="list-content">
+	<!--块元素-->
+	<div class="block">
+		<!--修饰块元素名称-->
+		<div class="banner">
+			<p class="tab fixed">图书借阅</p>
+		</div>
+
+		<!--正文内容-->
+		<div class="main">
+			<form id="form">
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">ISBN编号</p></div>
+					<div class="right">
+						<input type="text" id="isbn" class="text" placeholder="输入ISBN编号可自动查询" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">书名</p></div>
+					<div class="right">
+						<input type="text" id="bookName" class="text" placeholder="请输入图书名称" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">作者</p></div>
+					<div class="right">
+						<input type="text" id="author" class="text" placeholder="作者" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">出版社</p></div>
+					<div class="right">
+						<input type="text" id="publish" class="text" placeholder="出版社" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">借阅时间</p></div>
+					<div class="right">
+						<!--不一定是input，可以使用div或span等其他元素-->
+						<input type="text" id="date2" class="ex-date" style="width: 220px;" value="" readonly/>
+					</div>
+				</div>
+
+				<!--下拉选择框-->
+				<div class="unit clear">
+					<div class="left"><p class="subtitle">图书分类</p></div>
+					<div class="right">
+						<input type="text" id="type" class="text" placeholder="图书分类" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">页数</p></div>
+					<div class="right">
+						<input type="text" id="pages" class="text" placeholder="图书页数" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">定价</p></div>
+					<div class="right">
+						<input type="text" id="price" class="text" placeholder="定价" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">库存数量</p></div>
+					<div class="right">
+						<input type="text" id="size" class="text" placeholder="库存数量" />
+					</div>
+				</div>
+
+				<!--提交按钮-->
+				<div class="unit clear" style="width: 800px;">
+					<div style="text-align: center;">
+						<!--表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数-->
+						<input type="button" id="return" class="button no" value="返回" />
+						<input type="button" id="save" class="button yes" value="借阅" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	var bookId = 0;
+    // 页面一加载赋值表单
+    $(document).ready(function(){
+        // 地址栏参数
+        bookId = getQueryVariable("id");
+        if (bookId == null||bookId == "") {
+            $("#isbn").removeAttr("readonly");
+            // 监听输入框
+            $("#isbn").bind("input propertychange",function(event){
+                var isbn = $("#isbn").val();
+                console.log(isbn);
+                $.get("/book/detailByIsbn",{"isbn": isbn}, function(data){
+                    var data = data.data;
+                    console.log(data);
+                    // 页面一加载, 读取登录用户信息
+                    $("#bookName").val(data.name);
+                    $("#isbn").val(data.isbn);
+                    $("#author").val(data.author);
+                    $("#pages").val(data.pages);
+                    $("#price").val(data.price);
+                    $("#publish").val(data.publish);
+                    $("#type").val(data.type);
+                    $("#size").val(data.size);
+
+                    bookId = data.id;
+
+                    console.log(data.type);
+                });
+            });
+        }else {
+            // get读取参数
+            $.get("/book/detail",{"id": bookId}, function(data){
+                var data = data.data;
+                console.log(data);
+                // 页面一加载, 读取登录用户信息
+                $("#bookName").val(data.name);
+                $("#isbn").val(data.isbn);
+                $("#author").val(data.author);
+                $("#pages").val(data.pages);
+                $("#price").val(data.price);
+                // $("#publishTime").val(data.publishTime);
+                $("#publish").val(data.publish);
+                // $("#size").val(data.size);
+                // $("#translate").val(data.translate);
+                $("#type").val(data.type);
+                $("#size").val(data.size);
+                console.log(data.type);
+            });
+
+        }
+
+    });
+
+
+    // 获取地址栏参数
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return false;
+    }
+
+
+    // 当天时间
+    var currentDate = new Date();
+    // 默认开始时间
+    var startDate = dateFormat("YYYY-mm-dd",currentDate);
+    // 明天的时间
+    var day = new Date();
+    day.setDate(day.getDate() + 1);
+    var endDate = dateFormat("YYYY-mm-dd",day);
+
+    var sTime = startDate;
+    var eTime = endDate;
+
+    javaex.date({
+        id : "date2",		// 承载日期组件的id
+        monthNum : 2,		// 2代表选择范围日期
+        startDate : startDate,	// 开始日期
+        endDate : endDate,		// 结束日期
+        // 重新选择日期之后返回一个时间对象
+        callback : function(rtn) {
+            console.log(rtn.startDate + " - " + rtn.endDate);
+            // 刷新时间
+            sTime = rtn.startDate;
+            eTime = rtn.endDate;
+        }
+    });
+
+
+    // 监听点击保存按钮事件
+    $("#save").click(function() {
+        // 因为书名只读, 以书名判断, 用户是否输入可借书籍
+        var bookName = $("#bookName").val();
+        var size = $("#size").val();
+        if (bookName == null||bookName == "") {
+            javaex.optTip({
+                content : "请输入正确的图书编码!",
+                type : "error"
+            });
+            return false;
+		}
+
+		if (size==null||size<=0) {
+            javaex.optTip({
+                content : "库存数量不够, 无法借阅!",
+                type : "error"
+            });
+            return false;
+		}
+
+		var userId = 0;
+		// 先获取当前登录用户信息
+        $.get("/user/currUser", function(data){
+			var user = data.data;
+			userId = user.id;
+			console.log(userId);
+            // 查找到用户, 进行借阅
+            if (userId >0) {
+                var json = {"userId":userId,"bookId":bookId,"createTime":sTime,"endTime":eTime,"updateTime":eTime};
+                // 借阅图书
+                $.ajax({
+                    //请求方式
+                    type : "POST",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    //请求地址
+                    url : "/borrow/add",
+                    //数据，json字符串
+                    data : JSON.stringify(json),
+                    //请求成功
+                    success : function(result) {
+                        console.log(result);
+                        // 获取集合属性
+                        var data = result.data;
+                        var code = result.code;
+                        var msg = result.msg;
+
+                        if (code == 200) {
+                            javaex.message({
+                                content : "借阅成功",
+                                type : "success"
+                            });
+                            // 跳转至列表
+                            setTimeout(function(){window.location.href="/borrow/book-search";},1800)
+                        }else{
+                            javaex.message({
+                                content : msg,
+                                type : "error"
+                            });
+                            setTimeout(function(){},1500)
+						}
+
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+            }else {
+                // 找不到用户, 不可进行借阅操作
+                javaex.message({
+                    content : "登录信息已失效, 请登录后借阅",
+                    type : "error"
+                });
+            }
+        });
+
+    });
+
+
+    // 监听点击返回按钮事件
+    $("#return").click(function() {
+        // alert("返回");
+        window.location.href = "/borrow/book-search";
+    });
+
+    // 日期格式化
+    function dateFormat(fmt, date) {
+        var ret;
+        var opt = {
+            "Y+": date.getFullYear().toString(),        // 年
+            "m+": (date.getMonth() + 1).toString(),     // 月
+            "d+": date.getDate().toString(),            // 日
+            "H+": date.getHours().toString(),           // 时
+            "M+": date.getMinutes().toString(),         // 分
+            "S+": date.getSeconds().toString()          // 秒
+            // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (var k in opt) {
+            ret = new RegExp("(" + k + ")").exec(fmt);
+            if (ret) {
+                fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+            }
+        }
+        return fmt;
+    }
+
+</script>
+</body>
+</html>

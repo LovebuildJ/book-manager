@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.manager.dao.BorrowMapper">
+    <resultMap id="BaseResultMap" type="com.book.manager.entity.Borrow" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="book_id" property="bookId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ret" property="ret" jdbcType="INTEGER" />
+    </resultMap>
+
+    <update id="updateBor" parameterType="map">
+        update borrow
+        <set>
+            <if test="userId != null">
+              user_id = #{userId},
+            </if>
+            <if test="bookId != null">
+              book_id = #{bookId},
+            </if>
+            <if test="createTime != null">
+             create_time = #{createTime},
+            </if>
+            <if test="endTime != null">
+             end_time = #{endTime},
+            </if>
+            <if test="updateTime != null">
+             update_time = #{updateTime},
+            </if>
+            <if test="ret != null">
+             ret = #{ret},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

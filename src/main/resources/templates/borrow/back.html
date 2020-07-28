@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<!--字体图标-->
+<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
+<!--动画-->
+<link href="../../javaex/pc/css/animate.css" rel="stylesheet" />
+<!--骨架样式-->
+<link href="../../javaex/pc/css/common.css" rel="stylesheet" />
+<!--皮肤（缇娜）-->
+<link href="../../javaex/pc/css/skin/tina.css" rel="stylesheet" />
+<!--jquery，不可修改版本-->
+<script src="../../javaex/pc/lib/jquery-1.7.2.min.js"></script>
+<!--全局动态修改-->
+<script src="../../javaex/pc/js/common.js"></script>
+<!--核心组件-->
+<script src="../../javaex/pc/js/javaex.min.js"></script>
+<!--表单验证-->
+<script src="../../javaex/pc/js/javaex-formVerify.js"></script>
+<!-- 加入layer弹出层 -->
+<script src="../../javaex/layer/layer.js"></script>
+<title>图书归还</title>
+</head>
+<style>
+    
+</style>
+
+<body>
+    <!--全部主体内容-->
+<div class="list-content">
+	<!--块元素-->
+	<div class="block">
+		<!--修饰块元素名称-->
+		<div class="banner">
+			<p class="tab fixed">图书归还</p>
+		</div>
+	
+		<!--正文内容-->
+		<div class="main">
+			<form id="form">
+				<!--文本框-->
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">用户名</p></div>
+					<div class="right">
+						<input type="text" class="text" name="username" id="username" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">昵称</p></div>
+					<div class="right">
+						<input type="text" class="text" name="nickname" id="nickname" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">身份</p></div>
+					<div class="right">
+						<input type="text" class="text" name="identity" id="identity" readonly />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">可借数量</p></div>
+					<div class="right">
+						<input type="text" class="text" name="size" id="size" readonly />
+					</div>
+				</div>
+
+				<div class="left"><span class="required">*</span><p class="subtitle">已借阅列表</p></div>
+				<!-- 已借阅列表 -->
+				<table id="table" class="table color2">
+					<thead>
+					<tr align="center">
+						<th>序号</th>
+						<th>书名</th>
+						<th>作者</th>
+						<th>ISBN</th>
+						<th>页数</th>
+						<th>定价</th>
+						<th>出版社</th>
+						<th>分类</th>
+						<th>借阅时间</th>
+						<th>应还时间</th>
+						<th>是否逾期</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody id="tbody">
+					</tbody>
+				</table>
+
+				<!--提交按钮-->
+				<!--<div class="unit clear" style="width: 800px;">-->
+					<!--<div style="text-align: center;">-->
+						<!--&lt;!&ndash;表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数&ndash;&gt;-->
+						<!--<input type="button" id="return" class="button no" value="返回" />-->
+						<!--<input type="button" id="save" class="button yes" value="保存" />-->
+					<!--</div>-->
+				<!--</div>-->
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        // 1. 先查询用户信息
+        $.get("/user/currUser", function(data){
+            var user = data.data;
+            // 渲染用户数据
+            $("#username").val(user.username);
+            $("#nickname").val(user.nickname);
+            $("#identity").val(user.ident);
+            $("#size").val(user.size);
+
+            // 2. 查询用户借阅信息, 并渲染借阅列表
+            $.get("/borrow/borrowed",{"userId":user.id} ,function(result){
+                var text  = "";
+                var backArray = result.data;
+                // 渲染用户数据
+                $.each(backArray,function(index,value){
+                    console.log(value);
+                    var num = index+1;
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
+                        "<td>"+value.pages+"</td><td>"+value.price+"</td><td>"+value.publish+"</td><td>"+value.type+"</td>" +
+                        "<td>"+value.borrowTime+"</td><td>"+value.endTime+"</td><td>"+value.late+"</td><td>"+
+                        "<button class='button blue empty' onclick='retBook("+user.id+","+value.id+")'>归还图书</td></tr>";
+                });
+
+                $("#tbody").html(text);
+            });
+		});
+	});
+
+
+	// 3. 归还操作
+	function retBook(userId,bookId) {
+	    // 关闭异步, 此处关闭异步的原因是修改和提示异步的话, 提示会直接不可用!
+        $.ajaxSettings.async = false;
+        $.post("/borrow/ret",{"userId":userId,"bookId":bookId},function(result) {
+            var code = result.code;
+            if (code == 200) {
+               alert("归还成功!");
+            }
+		},"json");
+
+        // 恢复异步
+        $.ajaxSettings.async = true;
+    }
+
+</script>
+</body>
+</html>

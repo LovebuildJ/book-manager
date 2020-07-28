@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<!--字体图标-->
+<link href="../static/javaex/pc/css/icomoon.css" rel="stylesheet" />
+<!--动画-->
+<link href="../static/javaex/pc/css/animate.css" rel="stylesheet" />
+<!--骨架样式-->
+<link href="../static/javaex/pc/css/common.css" rel="stylesheet" />
+<!--皮肤（缇娜）-->
+<link href="../static/javaex/pc/css/skin/tina.css" rel="stylesheet" />
+<!--jquery，不可修改版本-->
+<script src="../static/javaex/pc/lib/jquery-1.7.2.min.js"></script>
+<!--全局动态修改-->
+<script src="../static/javaex/pc/js/common.js"></script>
+<!--核心组件-->
+<script src="../static/javaex/pc/js/javaex.min.js"></script>
+<!--表单验证-->
+<script src="../static/javaex/pc/js/javaex-formVerify.js"></script>
+<title>后台管理</title>
+</head>
+<style>
+    
+</style>
+
+<body>
+
+<script type="text/javascript">
+    // ajax 示例
+    $.ajax({
+        //请求方式
+        type : "POST",
+        //请求的媒体类型
+        contentType: "application/json;charset=UTF-8",
+        //请求地址
+        url : "/book/list",
+        //数据，json字符串
+        data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
+        //请求成功
+        success : function(result) {
+            console.log(result);
+            // 获取集合属性
+            var r = result.data;
+
+        },
+        //请求失败，包含具体的错误信息
+        error : function(e){
+            console.log(e.status);
+            console.log(e.responseText);
+        }
+    });
+</script>
+</body>
+</html>

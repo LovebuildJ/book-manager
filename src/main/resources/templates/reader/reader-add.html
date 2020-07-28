@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<!--字体图标-->
+<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
+<!--动画-->
+<link href="../../javaex/pc/css/animate.css" rel="stylesheet" />
+<!--骨架样式-->
+<link href="../../javaex/pc/css/common.css" rel="stylesheet" />
+<!--皮肤（缇娜）-->
+<link href="../../javaex/pc/css/skin/tina.css" rel="stylesheet" />
+<!--jquery，不可修改版本-->
+<script src="../../javaex/pc/lib/jquery-1.7.2.min.js"></script>
+<!--全局动态修改-->
+<script src="../../javaex/pc/js/common.js"></script>
+<!--核心组件-->
+<script src="../../javaex/pc/js/javaex.min.js"></script>
+<!--表单验证-->
+<script src="../../javaex/pc/js/javaex-formVerify.js"></script>
+<title>后台管理</title>
+</head>
+<style>
+    
+</style>
+
+<body>
+    <!--全部主体内容-->
+<div class="list-content">
+	<!--块元素-->
+	<div class="block">
+		<!--修饰块元素名称-->
+		<div class="banner">
+			<p class="tab fixed">添加读者</p>
+		</div>
+	
+		<!--正文内容-->
+		<div class="main">
+			<form id="form">
+				<!--文本框-->
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">昵称</p></div>
+					<div class="right">
+						<input type="text" class="text" id="nickname" name="nickname"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">用户名</p></div>
+					<div class="right">
+						<input type="text" class="text" id="username" name="username"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">密码</p></div>
+					<div class="right">
+						<input type="password" class="text" id="password" name="password"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">生日</p></div>
+					<div class="right">
+						<input type="text" class="text" id="birthday" name="birthday"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">电话</p></div>
+					<div class="right">
+						<input type="text" class="text" id="tel" name="tel"/>
+					</div>
+				</div>
+
+				<!--下拉选择框-->
+				<div class="unit clear">
+					<div class="left"><p class="subtitle">身份</p></div>
+					<div class="right">
+						<select id="select">
+							<option value="">请选择</option>
+							<option value="0">学生</option>
+							<option value="1">教师</option>
+							<option value="2">校外人士</option>
+							<option value="3">管理员</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">邮箱</p></div>
+					<div class="right">
+						<input type="text" class="text" id="email" name="email"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">地址</p></div>
+					<div class="right">
+						<input type="text" class="text" id="address" name="address"/>
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">可借数量</p></div>
+					<div class="right">
+						<input type="text" class="text" id="size" name="size"/>
+					</div>
+				</div>
+				<br>
+				<br>
+
+				
+				<!--提交按钮-->
+				<div class="unit clear" style="width: 800px;">
+					<div style="text-align: center;">
+						<!--表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数-->
+						<input type="button" id="return" class="button no" value="返回" />
+						<input type="button" id="save" class="button yes" value="保存" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	javaex.select({
+		id : "select",
+		isSearch : false
+	});
+
+	// 监听点击保存按钮事件
+	$("#save").click(function() {
+		// 表单验证函数
+		var nickname = $("#nickname").val();
+		var username = $("#username").val();
+		var password = $("#password").val();
+		var birthday = $("#birthday").val();
+		var tel = $("#tel").val();
+		var email = $("#email").val();
+		var address = $("#address").val();
+		var size = $("#size").val();
+        var identity = $('#select option:selected').val();// 身份
+
+		if (nickname == ""||nickname.length>12) {
+            javaex.message({
+                content : "昵称不能为空且长度不能大于12",
+                type : "error"
+            });
+            return false;
+		}
+
+        if (username == ""||username.length>12) {
+            javaex.message({
+                content : "用户名不能为空且长度不能大于12",
+                type : "error"
+            });
+			return false;
+        }
+
+        if (password == ""||password.length>18) {
+            javaex.message({
+                content : "密码不能为空且长度不能大于18",
+                type : "error"
+            });
+            return false;
+        }
+
+		var json = {"nickname":nickname,"username":username,"password":password,"birthday":birthday,"tel":tel,"email":email,"address":address,"size":size,"identity":identity};
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/user/add_reader",
+            //数据，json字符串
+            data : JSON.stringify(json),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                // 获取集合属性
+                var data = result.data;
+                var code = result.code;
+
+                if (code == 200) {
+                    javaex.message({
+                        content : "添加成功",
+                        type : "success"
+                    });
+
+                    // 跳转至列表
+                    setTimeout(function(){window.location.href="/reader/reader-list";},1500)
+                }
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+	});
+
+	// 监听点击返回按钮事件
+	$("#return").click(function() {
+		window.location.href="/reader/reader-list"
+	});
+
+    // 获取地址栏参数
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
