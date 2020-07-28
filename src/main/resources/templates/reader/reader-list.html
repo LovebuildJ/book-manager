@@ -119,7 +119,7 @@
                 $.each(array,function(index,value){
                     console.log(value);
                     var num = pageSize * (currPage - 1) + index + 1;
-                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.nickname+"</td><td>"+value.username+"</td><td>"+value.birthday+"</td>" +
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.nickname+"</td><td>"+value.username+"</td><td>"+value.birth+"</td>" +
                         "<td>"+value.tel+"</td><td>"+value.email+"</td><td>"+value.address+"</td><td>"+value.size+"</td>" +
                         "<td>"+value.ident+"</td><td>"+
                         "<button class='button blue empty' onclick='updateBook("+value.id+")'>编辑</button> &nbsp;<button class='button yellow empty' onclick='delBook("+value.id+")'>删除</button></td></tr>";

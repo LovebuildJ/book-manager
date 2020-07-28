@@ -14,4 +14,7 @@ public class UserOut extends Users{
 
     @ApiModelProperty("身份(中文：学生/教师/社会人士/管理员)")
     private String ident;
+
+    @ApiModelProperty("生日：yyyy-MM-dd格式")
+    private String birth;
 }
