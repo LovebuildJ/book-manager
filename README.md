@@ -36,7 +36,14 @@
 - 读者列表
 ![读者列表](https://images.gitee.com/uploads/images/2020/0728/220600_d9bbdad8_1865362.png "reader-list.png")
 
+- 添加读者
+![添加读者](https://images.gitee.com/uploads/images/2020/0728/220816_d382a217_1865362.png "reader-add.png")
 
+- 用户列表
+![用户列表](https://images.gitee.com/uploads/images/2020/0728/220837_7a6de75b_1865362.png "user-list.png")
+
+- 操作提示
+![操作提示](https://images.gitee.com/uploads/images/2020/0728/220858_61b0b289_1865362.png "success.png")
 
 #### 软件架构
 软件架构说明:
