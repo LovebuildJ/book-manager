@@ -9,14 +9,34 @@
 - 登录
 ![登录](https://images.gitee.com/uploads/images/2020/0728/220039_eac21a26_1865362.png "login.png")
 
+- 首页轮播
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0728/220412_5849b2ba_1865362.png "index.png")
+
 - 图书列表
 ![图书列表](https://images.gitee.com/uploads/images/2020/0728/220106_01690382_1865362.png "book-list.png")
 
 - 图书上架
-- ![图书上架](https://images.gitee.com/uploads/images/2020/0728/220142_f1321c49_1865362.png "book-add.png")
+![图书上架](https://images.gitee.com/uploads/images/2020/0728/220142_f1321c49_1865362.png "book-add.png")
 
 - 图书编辑
 ![图书编辑](https://images.gitee.com/uploads/images/2020/0728/220205_23718704_1865362.png "book-update.png")
+
+- 图书删除
+![图书删除](https://images.gitee.com/uploads/images/2020/0728/220325_868b4a18_1865362.png "book-del.png")
+
+- 图书借阅
+![图书借阅](https://images.gitee.com/uploads/images/2020/0728/220426_add9604e_1865362.png "borrow.png")
+
+- 图书检索
+![图书检索](https://images.gitee.com/uploads/images/2020/0728/220449_10ce9e23_1865362.png "book-search.png")
+
+- 图书归还
+![图书归还](https://images.gitee.com/uploads/images/2020/0728/220522_b028a938_1865362.png "return.png")
+
+- 读者列表
+![读者列表](https://images.gitee.com/uploads/images/2020/0728/220600_d9bbdad8_1865362.png "reader-list.png")
+
+
 
 #### 软件架构
 软件架构说明:
