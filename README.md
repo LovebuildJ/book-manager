@@ -1,7 +1,9 @@
 # book-manager
 
+<a href='https://gitee.com/Jason218/book-manager'><img src='https://gitee.com/Jason218/book-manager/widgets/widget_3.svg' alt='Fork me on Gitee'></img></a>
+
 #### 介绍
-图书管理系统 ， 快速使用可看[Wiki](http://https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
+图书管理系统 ， 快速使用可看[Wiki](https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
 
 
 #### 软件截图
