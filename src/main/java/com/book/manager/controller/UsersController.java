@@ -1,6 +1,7 @@
 package com.book.manager.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.book.manager.entity.Users;
 import com.book.manager.service.UserService;
@@ -53,6 +54,7 @@ public class UsersController {
             UserOut out = new UserOut();
             BeanUtils.copyProperties(users,out);
             out.setIdent(ConvertUtil.identStr(users.getIdentity()));
+            out.setBirth(DateUtil.format(users.getBirthday(),Constants.DATE_FORMAT));
             outs.add(out);
         }
 
@@ -61,20 +63,31 @@ public class UsersController {
         return R.success(CodeEnum.SUCCESS,pageOut);
     }
 
-    @ApiOperation("添加用户")
-    @PostMapping("/add")
-    public R addUsers(@RequestBody Users users) {
-        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
-    }
+//    @ApiOperation("添加用户")
+//    @PostMapping("/add")
+//    public R addUsers(@RequestBody Users users) {
+//        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
+//    }
 
     @ApiOperation("添加读者")
-    @PostMapping("/add_reader")
+    @PostMapping("/addReader")
     public R addReader(@RequestBody Users users) {
         if (users == null) {
             return R.fail(CodeEnum.PARAM_ERROR);
         }
         // 读者默认是普通用户
         users.setIsAdmin(1);
+        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
+    }
+
+    @ApiOperation("添加管理员")
+    @PostMapping("/addAdmin")
+    public R addAdmin(@RequestBody Users users) {
+        if (users == null) {
+            return R.fail(CodeEnum.PARAM_ERROR);
+        }
+        // 设置管理员权限
+        users.setIsAdmin(0);
         return R.success(CodeEnum.SUCCESS,userService.addUser(users));
     }
 
@@ -89,7 +102,16 @@ public class UsersController {
     @ApiOperation("用户详情")
     @GetMapping("/detail")
     public R userDetail(Integer id) {
-        return R.success(CodeEnum.SUCCESS,userService.findUserById(id));
+        Users user = userService.findUserById(id);
+        if (user!=null) {
+            UserOut out = new UserOut();
+            BeanUtils.copyProperties(user,out);
+            out.setBirth(DateUtil.format(user.getBirthday(),Constants.DATE_FORMAT));
+            out.setIdent(ConvertUtil.identStr(user.getIdentity()));
+            return R.success(CodeEnum.SUCCESS,out);
+        }
+
+        return R.fail(CodeEnum.NOT_FOUND);
     }
 
     @ApiOperation("删除用户")
@@ -110,6 +132,7 @@ public class UsersController {
                 Users users = userService.findByUsername(username);
                 UserOut out = new UserOut();
                 BeanUtils.copyProperties(users,out);
+                out.setBirth(DateUtil.format(users.getBirthday(),Constants.DATE_FORMAT));
                 Integer identity = users.getIdentity();
                 String ident = "";
                 if (identity == Constants.STUDENT) {
