@@ -3,8 +3,8 @@
 #### 介绍
 图书管理系统
 
-快速上手可看[Wiki](https://github.com/LovebuildJ/book-manager/wiki/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
-详细使用可看[Wiki](https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
+- 快速上手可看[Wiki](https://github.com/LovebuildJ/book-manager/wiki/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
+- 详细使用可看[Wiki](https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
 
 
 #### 软件截图
