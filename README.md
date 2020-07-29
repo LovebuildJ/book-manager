@@ -54,7 +54,6 @@
 软件架构说明:
 
 ##### 后端：
->>>>>>> temp
 - 基础框架： SpringBoot
 - 简单数据操作： Spring Data Jpa
 - 复杂数据操作： Mybatis
@@ -104,6 +103,9 @@
 #### GitHub地址
 https://github.com/LovebuildJ/book-manager
 
+#### Gitee地址
+https://gitee.com/Jason218/book-manager
+
 #### 参与贡献
 
 1.  Fork 本仓库
@@ -120,4 +122,3 @@ https://github.com/LovebuildJ/book-manager
 4. 优化UI, 提示等用户体验
 5. 加入docker部署
 ...
->>>>>>> temp
