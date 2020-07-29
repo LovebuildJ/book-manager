@@ -1,12 +1,9 @@
 # book-manager
 
-<<<<<<< HEAD
 #### 介绍
 图书管理系统
-=======
 <a href='https://gitee.com/Jason218/book-manager'><img src='https://gitee.com/Jason218/book-manager/widgets/widget_3.svg' alt='Fork me on Gitee'></img></a>
 
-#### 介绍
 图书管理系统 ， 快速使用可看[Wiki](https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
 
 
@@ -52,14 +49,10 @@
 
 - 操作提示
 ![操作提示](https://images.gitee.com/uploads/images/2020/0728/220858_61b0b289_1865362.png "success.png")
->>>>>>> temp
 
 #### 软件架构
 软件架构说明:
 
-<<<<<<< HEAD
-后端：
-=======
 ##### 后端：
 >>>>>>> temp
 - 基础框架： SpringBoot
@@ -70,11 +63,7 @@
 - API文档&测试： Swagger2
 - API文档加强&美化： Swagger-Bootstrap-UI, 这个很好看, 而且功能强大,支持生成离线MD文档,但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
 
-<<<<<<< HEAD
-前端：
-=======
 ##### 前端：
->>>>>>> temp
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
 修改起来比较方便, 所以就用了。想了解的, 百度JavaEx即可。
 
@@ -88,15 +77,7 @@
 - 有意向聊一聊也是可以的蛮, 或许我就是你要找的那个人呢?
 
 #### 安装教程
-<<<<<<< HEAD
 
-1.  本地搭建好java8环境, 克隆项目
-2.  配置maven, 等待依赖下载完成
-3.  IDE安装好lombok插件
-4.  启动访问http://localhost:8080 即可
-5.  账号：【学生： stu/123】【教师： tea/123】【其他：other/123】【管理员：admin/123】
-6.  swagger API在线文档, 启动访问：http://localhost:8080/doc.html
-=======
 建议看wiki
 1.  本地搭建好java8环境,数据库MySQL5.5+, 克隆项目
 2.  导入sql文件至数据库中
@@ -105,7 +86,6 @@
 5.  启动访问http://localhost:8080 即可
 6.  账号：【学生： stu/123】【教师： tea/123】【其他：other/123】【管理员：admin/123】
 7.  swagger API在线文档, 启动访问：http://localhost:8080/doc.html
->>>>>>> temp
 #### 使用说明
 
 1.  本项目适用于大学生实训, 或者想要快速搭建一个后台管理类项目的朋友,或者个人学习使用
@@ -120,13 +100,10 @@
 它是给大家提供一种开发的范例, 在这个范例的基础上进行修改优化吸收变成自己的东西才是这个项目价值所在!
 
 由于工作比较忙, 此项目也是比较仓促写成, 很多地方没有增加限制希望大家能够理解, 或者自己进行优化
-<<<<<<< HEAD
-=======
 
 #### GitHub地址
 https://github.com/LovebuildJ/book-manager
 
->>>>>>> temp
 #### 参与贡献
 
 1.  Fork 本仓库
@@ -135,8 +112,6 @@ https://github.com/LovebuildJ/book-manager
 4.  新建 Pull Request
 5.  等待审核
 
-<<<<<<< HEAD
-=======
 #### 后续
 
 1. 发现BUG或者已知问题会不定期修复

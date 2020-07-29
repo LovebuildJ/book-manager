@@ -1,30 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<<<<<<< HEAD
-<meta charset="utf-8">
-<!--字体图标-->
-<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
-<!--动画-->
-<link href="../../javaex/pc/css/animate.css" rel="stylesheet" />
-<!--骨架样式-->
-<link href="../../javaex/pc/css/common.css" rel="stylesheet" />
-<!--皮肤（缇娜）-->
-<link href="../../javaex/pc/css/skin/tina.css" rel="stylesheet" />
-<!--jquery，不可修改版本-->
-<script src="../../javaex/pc/lib/jquery-1.7.2.min.js"></script>
-<!--全局动态修改-->
-<script src="../../javaex/pc/js/common.js"></script>
-<!--核心组件-->
-<script src="../../javaex/pc/js/javaex.min.js"></script>
-<!--表单验证-->
-<script src="../../javaex/pc/js/javaex-formVerify.js"></script>
-<title>后台管理</title>
-</head>
-
-<body>
-    <!--主体内容-->
-=======
 	<meta charset="utf-8">
 	<!--字体图标-->
 	<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
@@ -47,39 +23,21 @@
 
 <body>
 <!--主体内容-->
->>>>>>> temp
 <div class="list-content">
 	<!--块元素-->
 	<div class="block">
 		<!--页面有多个表格时，可以用于标识表格-->
-<<<<<<< HEAD
-		<h2>用户管理</h2>
-=======
 		<h2>用户列表</h2>
->>>>>>> temp
 		<!--右上角的返回按钮-->
 		<a href="javascript:history.back();">
 			<button class="button indigo radius-3" style="position: absolute;right: 20px;top: 16px;"><span class="icon-arrow_back"></span> 返回</button>
 		</a>
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> temp
 		<!--正文内容-->
 		<div class="main">
 			<!--表格上方的搜索操作-->
 			<div class="admin-search">
 				<div class="input-group">
-<<<<<<< HEAD
-					<input type="text" class="text" placeholder="提示信息" />
-					<button class="button blue">搜索</button>
-				</div>
-			</div>
-			
-			<!--表格上方的操作元素，添加、删除等-->
-			<!-- <div class="operation-wrap">
-=======
 					<input id="keyword" type="text" class="text" placeholder="搜索用户名或者昵称" />
 					<button id="searchBtn" class="button blue" onclick="search();">搜索</button>
 				</div>
@@ -88,71 +46,10 @@
 			<!--表格上方的操作元素，添加、删除等-->
 			<!--
 			<div class="operation-wrap">
->>>>>>> temp
 				<div class="buttons-wrap">
 					<button class="button blue radius-3"><span class="icon-plus"></span> 添加</button>
 					<button class="button red radius-3"><span class="icon-close2"></span> 删除</button>
 				</div>
-<<<<<<< HEAD
-			</div> -->
-			<table id="table" class="table color2">
-				<thead>
-					<tr>
-						<th class="checkbox"><input type="checkbox" class="fill listen-1" /> </th>
-						<th>序号</th>
-						<th>市区</th>
-						<th>省区</th>
-						<th>国别</th>
-						<th>国别</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>1</td>
-						<td>苏州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>2</td>
-						<td>无锡</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>
-						<td>3</td>
-						<td>常州</td>
-						<td>江苏省</td>
-						<td>中国</td>
-						<td>中国</td>
-						<td>
-							<button class="button blue">编辑</button>
-							<button class="button red">删除</button>
-						</td>
-					</tr>
-				</tbody>
-            </table>
-            
-            <div class="page">
-                <ul id="page" class="pagination"></ul>
-            </div>
-		</div>
-    </div>
-=======
 			</div>
 			-->
 			<table id="table" class="table color2">
@@ -184,26 +81,10 @@
 			</div>
 		</div>
 	</div>
->>>>>>> temp
 </div>
 
 
 <script>
-<<<<<<< HEAD
-	javaex.page({
-		id : "page",
-		pageCount : 12,	// 总页数
-		currentPage : 1,// 默认选中第几页
-		// perPageCount : 10,	// 每页显示多少条，不填时，不显示该条数选择控件
-		isShowJumpPage : false,	// 是否显示跳页
-		totalNum : 125,		// 总条数，不填时，不显示
-		position : "center",
-		callback : function(rtn) {
-			console.log("当前选中的页数：" + rtn.pageNum);
-			console.log("每页显示条数：" + rtn.perPageCount);
-		}
-	});
-=======
     // 页面一加载, 展示数据列表, 每页10条
     $(document).ready(function(){
         // 默认查询所有
@@ -290,7 +171,7 @@
                 content : "已经是管理员权限!",
                 type : "error"
             });
-		}else if (isAdmin == 1) {
+        }else if (isAdmin == 1) {
             $.ajax({
                 //请求方式
                 type : "POST",
@@ -312,7 +193,7 @@
 
                         // 跳转至列表
                         setTimeout(function(){window.location.href="/user/user-list";},1500)
-					}
+                    }
 
                 },
                 //请求失败，包含具体的错误信息
@@ -321,7 +202,7 @@
                     console.log(e.responseText);
                 }
             });
-		}
+        }
     }
 
     // 删除
@@ -352,7 +233,6 @@
         // 如果你想阻止弹出层关闭，直接 return false; 即可
         //return false;
     }
->>>>>>> temp
 </script>
 </body>
 </html>

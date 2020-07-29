@@ -39,87 +39,6 @@
 			<form id="form">
 				<!--文本框-->
 				<div class="unit clear">
-<<<<<<< HEAD
-					<div class="left"><span class="required">*</span><p class="subtitle">登录账号</p></div>
-					<div class="right">
-						1559832989
-					</div>
-				</div>
-				
-				<!--单选框-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">性别</p></div>
-					<div class="right">
-						<ul class="equal-8 clear">
-							<li><input type="radio" class="fill" name="sex" checked/>男</li>
-							<li><input type="radio" class="fill" name="sex" />女</li>
-						</ul>
-					</div>
-				</div>
-				
-				<!--复选框-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">兴趣</p></div>
-					<div class="right">
-						<ul class="equal-8 clear">
-							<li><input type="checkbox" class="fill" name="interest" />吃饭</li>
-							<li><input type="checkbox" class="fill" name="interest" />睡觉</li>
-							<li><input type="checkbox" class="fill" name="interest" />打豆豆</li>
-						</ul>
-					</div>
-				</div>
-				
-				<!--下拉选择框-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">学历</p></div>
-					<div class="right">
-						<select id="select">
-							<option value="">请选择</option>
-							<option value="1">大专</option>
-							<option value="2">本科</option>
-							<option value="3">硕士</option>
-							<option value="4">博士</option>
-							<option value="5">博士后</option>
-						</select>
-					</div>
-				</div>
-				
-				<!--日期选择框-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">注册时间</p></div>
-					<div class="right">
-						<input type="text" id="date" class="ex-date" style="width: 180px;" value="" readonly/>
-					</div>
-				</div>
-				
-				<!--文本域-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">简介</p></div>
-					<div class="right">
-						<textarea class="desc" placeholder="请填写简介"></textarea>
-						<!--提示说明-->
-						<p class="hint">请填写个人简介。简介中不得包含令人反感的信息，且长度应在10到255个字符之间。</p>
-					</div>
-				</div>
-				
-				<!--标签-->
-				<div class="unit clear">
-					<div class="left"><p class="subtitle">标签</p></div>
-					<div class="right">
-						<div class="tagbox"></div>
-						<input type="hidden" id="tag" name="tag" value="" />
-					</div>
-				</div>
-				
-				<!--提交按钮-->
-				<div class="unit clear" style="width: 800px;">
-					<div style="text-align: center;">
-						<!--表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数-->
-						<input type="button" id="return" class="button no" value="返回" />
-						<input type="button" id="save" class="button yes" value="保存" />
-					</div>
-				</div>
-=======
 					<div class="left"><span class="required">*</span><p class="subtitle">昵称</p></div>
 					<div class="right">
 						<input type="text" class="text" id="nickname" name="nickname" readonly="readonly"/>
@@ -184,57 +103,17 @@
 				</div>
 				<br>
 				<br>
-
->>>>>>> temp
 			</form>
 		</div>
 	</div>
 </div>
 
 <script>
-<<<<<<< HEAD
-=======
 
->>>>>>> temp
 	javaex.select({
 		id : "select",
 		isSearch : false
 	});
-<<<<<<< HEAD
-	
-	javaex.date({
-		id : "date",	// 承载日期组件的id
-		isTime : true,
-		date : "2018-04-15 01:01:01",	// 选择的日期
-		// 重新选择日期之后返回一个时间对象
-		callback : function(rtn) {
-			alert(rtn.date);
-		}
-	});
-	
-	javaex.tag({
-		id : "tag"
-	});
-	
-	// 监听点击保存按钮事件
-	$("#save").click(function() {
-		// 表单验证函数
-		if (javaexVerify()) {
-			// 返回错误信息时，可以添加自定义异常提示。参数为元素id和提示
-			// addErrorMsg("username", "用户名不存在");
-			// 提交
-			// $("#form").submit();
-			alert("验证通过");
-		}
-	});
-
-	// 监听点击返回按钮事件
-	$("#return").click(function() {
-		alert("返回");
-		// window.location.href = document.referrer;
-	});
-=======
-
 	// 页面加载执行
     $(document).ready(function(){
         // get读取参数
@@ -253,8 +132,6 @@
             return false;
 		});
 	});
-
->>>>>>> temp
 </script>
 </body>
 </html>
