@@ -73,7 +73,11 @@ public class UserService implements UserDetailsService{
      * @param users 用户对象
      * @return true or false
      */
+<<<<<<< HEAD
     @Transactional(rollbackFor = Exception.class)
+=======
+//    @Transactional(rollbackFor = Exception.class)
+>>>>>>> temp
     public boolean updateUser(Users users) {
         return usersMapper.updateUsers(BeanUtil.beanToMap(users))>0;
     }
