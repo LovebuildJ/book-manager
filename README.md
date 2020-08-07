@@ -50,6 +50,15 @@
 - 操作提示
 ![操作提示](https://images.gitee.com/uploads/images/2020/0728/220858_61b0b289_1865362.png "success.png")
 
+- 启动Banner
+
+![启动Banner](https://images.gitee.com/uploads/images/2020/0807/113718_a4ea899d_1865362.png "banner.png")
+
+- 网页标签栏logo
+
+![logo](https://images.gitee.com/uploads/images/2020/0807/113802_afa0f855_1865362.png "logo.png")
+
+
 #### 软件架构
 软件架构说明:
 
@@ -61,6 +70,7 @@
 - 模板引擎： Thymeleaf
 - API文档&测试： Swagger2
 - API文档加强&美化： Swagger-Bootstrap-UI, 这个很好看, 而且功能强大,支持生成离线MD文档,但是版本兼容性会有问题, 我试了很多版本, 最终1.9.3可以正常使用
+- hutool工具箱： Java各种工具封装, 爽的雅痞
 
 ##### 前端：
 - javaEx, 其实就是对html,css,js的封装, 很简单, 10分钟就能上手。比较接近原生
