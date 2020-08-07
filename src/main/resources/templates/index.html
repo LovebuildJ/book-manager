@@ -59,34 +59,34 @@
 							<li class="menu-item">
                                 <a href="javascript:;">图书管理<i class="icon-keyboard_arrow_left"></i></a>
                                 <ul>
-									<li><a href="javascript:page('book/book-list');">图书列表</a></li>
-									<li><a href="javascript:page('book/book-add');">图书上架</a></li>
+									<li><a id="book-list" href="javascript:page('book/book-list');">图书列表</a></li>
+									<li><a id="add-book" href="javascript:page('book/book-add');">图书上架</a></li>
 								</ul>
                             </li>
                             
 							<li class="menu-item">
 								<a href="javascript:;">借阅管理<i class="icon-keyboard_arrow_left"></i></a>
 								<ul>
-									<li><a href="javascript:page('borrow/book-search');">搜索图书</a></li>
-                                    <li><a href="javascript:page('borrow/borrow');">借阅图书</a></li>
-                                    <li><a href="javascript:page('borrow/back');">归还图书</a></li>
+									<li><a id="book-search" href="javascript:page('borrow/book-search');">搜索图书</a></li>
+                                    <li><a id="book-borrow" href="javascript:page('borrow/borrow');">借阅图书</a></li>
+                                    <li><a id="book-back" href="javascript:page('borrow/back');">归还图书</a></li>
 								</ul>
                             </li>
 
                             <li class="menu-item">
 								<a href="javascript:;">读者管理<i class="icon-keyboard_arrow_left"></i></a>
 								<ul>
-									<li><a href="javascript:page('reader/reader-list');">读者列表</a></li>
-                                    <li><a href="javascript:page('reader/reader-add');">读者添加</a></li>
+									<li><a id="reader-list" href="javascript:page('reader/reader-list');">读者列表</a></li>
+                                    <li><a id="reader-add" href="javascript:page('reader/reader-add');">读者添加</a></li>
 								</ul>
                             </li>
                             
                             <li class="menu-item">
 								<a href="javascript:;">用户中心<i class="icon-keyboard_arrow_left"></i></a>
 								<ul>
-									<li><a href="javascript:page('user/user-info');">个人信息</a></li>
-                                    <li><a href="javascript:page('user/user-list');">用户管理</a></li>
-                                    <li><a href="javascript:page('user/user-add');">添加管理员</a></li>
+									<li><a id="user-info" href="javascript:page('user/user-info');">个人信息</a></li>
+                                    <li><a id="user-manage" href="javascript:page('user/user-list');">用户管理</a></li>
+                                    <li><a id="admin-add" href="javascript:page('user/user-add');">添加管理员</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -130,14 +130,23 @@
 	}
 
     $(document).ready(function(){
-        // 页面一加载, 读取登录用户信息
-        // get读取参数
+        // 页面一加载, 读取登录用户信息, 进行权限限制
         $.get("/user/currUser", function(data){
             var code = data.code;
             var user = data.data;
             if (code == 200) {
                 // 设置用户昵称
                 $("#nickname").text(user.nickname);
+				// 根据用户权限, 控制用户可见菜单
+                var auth = user.isAdmin;
+                if (auth != 0) {
+                    console.log(auth);
+                    // 若为普通用户权限, 则无法访问修改类菜单 无法添加图书,添加读者,管理用户以及添加管理员
+					$("#add-book").hide();
+					$("#reader-add").hide();
+					$("#user-manage").hide();
+					$("#admin-add").hide();
+				}
 			}
 
             return false;
