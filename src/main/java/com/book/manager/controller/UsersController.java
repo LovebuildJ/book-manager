@@ -69,11 +69,6 @@ public class UsersController {
         return R.success(CodeEnum.SUCCESS,userService.addUser(users));
     }
 
-//    @ApiOperation("添加用户")
-//    @PostMapping("/add")
-//    public R addUsers(@RequestBody Users users) {
-//        return R.success(CodeEnum.SUCCESS,userService.addUser(users));
-//    }
 
     @ApiOperation("添加读者")
     @PostMapping("/addReader")
