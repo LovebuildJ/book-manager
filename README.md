@@ -114,6 +114,12 @@ https://gitee.com/Jason218/book-manager
 4.  新建 Pull Request
 5.  等待审核
 
+#### 更新日志
+- 2020/8/7日优化一下问题：
+  1. 首页右上角动态显示用户昵称
+  2. 添加网站logo(浏览器标签页) 
+  3. 自定制启动banner(想要自己定制的可以去这里：https://www.bootschool.net/ascii-art/search)
+
 #### 后续
 
 1. 发现BUG或者已知问题会不定期修复
