@@ -5,6 +5,7 @@
 
 - 快速上手可看[Wiki](https://github.com/LovebuildJ/book-manager/wiki/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
 - 详细使用可看[Wiki](https://gitee.com/Jason218/book-manager/wikis/%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
+- 请勿忽略更新日志, 会有详细的版本更新说明！
 
 
 #### 软件截图
@@ -125,10 +126,15 @@ https://gitee.com/Jason218/book-manager
 5.  等待审核
 
 #### 更新日志
-- 2020/8/7日优化一下问题：
-  1. 首页右上角动态显示用户昵称
-  2. 添加网站logo(浏览器标签页) 
-  3. 自定制启动banner(想要自己定制的可以去这里：https://www.bootschool.net/ascii-art/search)
+- 2020/8/7 2:00PM 增加权限菜单控制
+> 1. v1.0.3版本之前的用户可以更新代码, 然后删除表结构重新导入sql。 或者将users表中不是管理员用户的is_admin字段的值设为1
+> 2. v1.0.3版本, 非管理员用户, 则访问菜单受限。以下菜单不可见：添加图书, 添加读者, 管理用户, 添加管理员。 管理员用户则有所有菜单访问权限!
+> 3. 只是做一个简单的控制, 复杂的RBAC后续可能会加上吧, 时间不定
+
+- 2020/8/7日 10：00AM 优化一下问题：
+> 1. 首页右上角动态显示用户昵称
+> 2. 添加网站logo(浏览器标签页) 
+> 3. 自定制启动banner(想要自己定制的可以去这里：https://www.bootschool.net/ascii-art/search)
 
 #### 后续
 
