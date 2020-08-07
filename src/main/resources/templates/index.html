@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
+<!-- 标题栏LOGO -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <!--字体图标-->
 <link href="../javaex/pc/css/icomoon.css" rel="stylesheet" />
 <!--动画-->
@@ -32,7 +34,7 @@
 			<!--右侧-->
 			<ul class="admin-navbar-nav fr">
 				<li>
-					<a href="javascript:;">欢迎您，管理员</a>
+					<a href="javascript:;">欢迎您，<span id="nickname">管理员</span></a>
 					<ul class="dropdown-menu" style="right: 10px;">
 						<li><a href="/logout">退出当前账号</a></li>
 					</ul>
@@ -129,7 +131,17 @@
 
     $(document).ready(function(){
         // 页面一加载, 读取登录用户信息
+        // get读取参数
+        $.get("/user/currUser", function(data){
+            var code = data.code;
+            var user = data.data;
+            if (code == 200) {
+                // 设置用户昵称
+                $("#nickname").text(user.nickname);
+			}
 
+            return false;
+        });
     });
 </script>
 </html>

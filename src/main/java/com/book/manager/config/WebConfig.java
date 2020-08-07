@@ -23,4 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
         // 添加拦截器 使用spring security 无需登录拦截
     }
 
+    
+
 }
