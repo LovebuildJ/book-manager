@@ -1,6 +1,6 @@
 # book-manager
 
-![](https://github.com/LovebuildJ/book-manager)
+[![GitHub issues](https://img.shields.io/github/issues/LovebuildJ/book-manager)](https://github.com/LovebuildJ/book-manager/issues)
 
 #### 介绍
 图书管理系统
