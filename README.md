@@ -1,6 +1,10 @@
 # book-manager
 
-[![GitHub issues](https://img.shields.io/github/issues/LovebuildJ/book-manager)](https://github.com/LovebuildJ/book-manager/issues)
+[![GitHub stars](https://img.shields.io/github/stars/LovebuildJ/book-manager?style=social)](https://github.com/LovebuildJ/book-manager/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/LovebuildJ/book-manager?style=social)](https://github.com/LovebuildJ/book-manager/network)
+[![GitHub issues](https://img.shields.io/github/issues/LovebuildJ/book-manager?style=social)](https://github.com/LovebuildJ/book-manager/issues)
+[![GitHub license](https://img.shields.io/github/license/LovebuildJ/book-manager?style=social)](https://github.com/LovebuildJ/book-manager/blob/master/LICENSE)
+
 
 #### 介绍
 图书管理系统
