@@ -109,10 +109,13 @@ public class BookService {
      */
     public PageOut getBookList(PageIn pageIn) {
 
+        //调用分页工具
         PageHelper.startPage(pageIn.getCurrPage(),pageIn.getPageSize());
+        //通过bookMapper封装sql语句
         List<Book> list = bookMapper.findBookListByLike(pageIn.getKeyword());
         PageInfo<Book> pageInfo = new PageInfo<>(list);
-
+        
+        //数组结果处理
         List<BookOut> bookOuts = new ArrayList<>();
         for (Book book : pageInfo.getList()) {
             BookOut out = new BookOut();
@@ -122,6 +125,7 @@ public class BookService {
         }
 
         // 自定义分页返回对象
+        //设置分页内容
         PageOut pageOut = new PageOut();
         pageOut.setList(bookOuts);
         pageOut.setTotal((int)pageInfo.getTotal());

@@ -19,7 +19,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- 使用Spring Security 作为安全框架 -->
+		<!-- 使用Spring Security作为安全框架 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
