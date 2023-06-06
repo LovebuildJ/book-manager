@@ -1,3 +1,5 @@
+本项目已暂停维护，因为...几年前写的感觉有点烂哈哈，不介意的随意
+
 # book-manager
 
 [![GitHub stars](https://img.shields.io/github/stars/LovebuildJ/book-manager?style=social)](https://github.com/LovebuildJ/book-manager/stargazers)
